@@ -33,6 +33,6 @@ public class MaxTest {
     public void whenBothAreEqual() {
         Max equal = new Max();
         int result = equal.max(1, 1);
-        assertThat(result, is(-1));
+        assertThat(result, is(1));
     }
 }
