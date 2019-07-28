@@ -15,12 +15,7 @@ public class Turn {
      * @return array массив в обратной последовательности
      */
     public int[] back(int[] array) {
-        //Ищем половину массива, для прерывания перестановки.
-        int halfArray = array.length / 2;
-        for (int index = 0; index < array.length; index++) {
-            if (index == halfArray){
-                break;
-            }
+        for (int index = 0; index < array.length / 2; index++) {
             int lastElemFromArray = array[array.length - index - 1];
             int firstElemFromArray = array[index];
             array[index] = lastElemFromArray;
