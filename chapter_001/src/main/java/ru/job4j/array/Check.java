@@ -17,9 +17,9 @@ public class Check {
     public boolean mono(boolean[] data) {
         boolean result = false;
         //Элемент массива взятый за основу, если все элементы ему равны, значит результат true, независимо от содержания
-        boolean paternElementFromArray = data[0];
+        boolean j = data[0];
         for (int index = 0; index < data.length; index++) {
-            if (data[index] != paternElementFromArray){
+            if (data[index] != j){
                 result = false;
                 break;
             }
