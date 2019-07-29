@@ -26,9 +26,17 @@ public class FindLoop {
         return rst;
     }
 
+    /**
+     * Метод indexOf
+     * @param data массив int[] в котором ищем элемент
+     * @param el элемент который ищем
+     * @param start элемент с которого начинается диапазон
+     * @param finish элемент закрывающий диапазон поиска
+     * @return int -1 если не найден, индекс элемента если найден.
+     */
     public int indexOf(int[] data, int el, int start, int finish) {
         int rst = -1; // если элемента нет в массиве, то возвращаем -1.
-        for (int index = start; index < data[finish]; index++) {
+        for (int index = start; index < finish; index++) {
             if (data[index] == el) {
                 rst = index;
                 break;
@@ -36,4 +44,5 @@ public class FindLoop {
         }
         return rst;
     }
+
 }
