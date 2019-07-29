@@ -8,14 +8,14 @@ public class ArrayCharTest {
     @Test
     public void whenStartWithPrefixThenTrue() {
         ArrayChar word = new ArrayChar();
-        boolean result = word.startsWith("Hello", "He");
+        boolean result = word.startsWith("синхофазатрон", "синхофазат");
         assertThat(result, is(true));
     }
 
     @Test
     public void whenNotStartWithPrefixThenFalse() {
         ArrayChar word = new ArrayChar();
-        boolean result = word.startsWith("Hello", "Hi");
+        boolean result = word.startsWith("синхофазатрон", "синхофазатва");
         assertThat(result, is(false));
     }
 }
