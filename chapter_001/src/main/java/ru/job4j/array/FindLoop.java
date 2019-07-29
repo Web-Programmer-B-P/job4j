@@ -45,4 +45,22 @@ public class FindLoop {
         return rst;
     }
 
+    /**
+     * Метод sort
+     * Сортировка по возрастанию
+     * @param data массив который сортируем
+     * @return data отсортированный
+     */
+    public int[] sort(int[] data) {
+        int first = 0 , second;
+        for (int index = 0; index < data.length; index++) {
+            first = this.indexOf(data, index + 1, index, data.length);
+            second = data[index];
+            if (data[first] < second) {
+                data[index] = data[first];
+                data[first] = second;
+            }
+        }
+        return data;
+    }
 }
