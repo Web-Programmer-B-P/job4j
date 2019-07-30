@@ -19,7 +19,7 @@ public class Check {
         //Элемент массива взятый за основу, если все элементы ему равны, значит результат true, независимо от содержания
         boolean j = data[0];
         for (int index = 0; index < data.length; index++) {
-            if (data[index] != j){
+            if (data[index] != j) {
                 result = false;
                 break;
             }

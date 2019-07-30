@@ -52,7 +52,7 @@ public class FindLoop {
      * @return data отсортированный
      */
     public int[] sort(int[] data) {
-        int first = 0 , second;
+        int first = 0, second;
         for (int index = 0; index < data.length; index++) {
             first = this.indexOf(data, index + 1, index, data.length);
             second = data[index];

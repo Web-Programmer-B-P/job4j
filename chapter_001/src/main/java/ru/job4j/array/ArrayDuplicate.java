@@ -19,7 +19,7 @@ public class ArrayDuplicate {
         int countLeight = array.length;
         //Счеткик для значений null
         int count = 0;
-        for (int i = 0; i < array.length; i++){
+        for (int i = 0; i < array.length; i++) {
             String check = array[i];
             //Если достигли null дальше сверять нет смысла
             if (check != null) {

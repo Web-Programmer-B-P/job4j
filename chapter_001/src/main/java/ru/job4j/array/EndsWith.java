@@ -15,8 +15,8 @@ public class EndsWith {
         char[] pst = post.toCharArray();
         char[] wrd = word.toCharArray();
         // проверить. что массив data с конца имеет ли он элементы одинаковые с value
-        for (int index = 1; index <= pst.length; index++){
-            if (wrd[wrd.length - index] != pst[pst.length - index]){
+        for (int index = 1; index <= pst.length; index++) {
+            if (wrd[wrd.length - index] != pst[pst.length - index]) {
                 result = false;
                 break;
             }

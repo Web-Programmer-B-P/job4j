@@ -15,8 +15,8 @@ public class ArrayChar {
         char[] pref = prefix.toCharArray();
         char[] wrd = word.toCharArray();
         // проверить. что массив data имеет первые элементы одинаковые с value
-        for (int index = 0; index < pref.length; index++){
-            if (wrd[index] != pref[index]){
+        for (int index = 0; index < pref.length; index++) {
+            if (wrd[index] != pref[index]) {
                 result = false;
             }
         }

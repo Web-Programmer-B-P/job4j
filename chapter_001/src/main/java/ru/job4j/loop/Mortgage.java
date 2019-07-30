@@ -9,8 +9,8 @@ public class Mortgage {
          * увеличивая сумму последовательно на 2, 3, 4 можем понять после скольких лет достигнем суммы долга.
          */
         int i = 1;
-        while (sumAmountWithPrecent > monthly){
-            if (year == 0){
+        while (sumAmountWithPrecent > monthly) {
+            if (year == 0) {
                 monthly *= 12;
                 year++;
             } else {
