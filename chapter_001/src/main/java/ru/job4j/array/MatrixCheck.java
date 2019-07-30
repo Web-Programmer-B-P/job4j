@@ -20,17 +20,13 @@ public class MatrixCheck {
         boolean result = true;
         int size = data.length;
         for (int index = 0; index < size; index++) {
-            if (size % 2 != 0) {
-                if (data[index][index] != data[size - 1 - index][index]){
+                if (data[0][0] != data[index][index]){
+                    result = false;
+                    break;
+                } else if (data[size - 1][0] != data[size - 1 - index][index]){
                     result = false;
                     break;
                 }
-            } else {
-                if (data[index][index] == data[size - 1 - index][index]){
-                    result = false;
-                    break;
-                }
-            }
         }
         return result;
     }
