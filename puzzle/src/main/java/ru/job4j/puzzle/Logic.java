@@ -71,25 +71,31 @@ public class Logic {
         boolean result = false;
         int size = table.length;
         int count = 0;
+        int row = -1;
+        int col = -1;
         for (int i = 0; i < size; i++) {
             if (table[i][0] == 1) {
-                int base = i;
-                for (int j = 0; j < size; j++) {
-                    if (table[base][0] == table[base][j]) {
-                      count++;
-                    }
-                }
+                row = i;
             } else if (table[0][i] == 1) {
-                int base = i;
-                for (int j = 0; j < size; j++) {
-                    if (table[0][base] == table[j][base]) {
+                col = i;
+            }
+            for (int j = 0; j < size; j++) {
+                if (row != -1) {
+                    if (table[row][0] == table[row][j]) {
+                        count++;
+                    }
+                } else if (col != -1) {
+                    if (table[0][col] == table[j][col]) {
                         count++;
                     }
                 }
             }
-        }
-        if (count == size) {
-            result = true;
+            if (count == size) {
+                result = true;
+            }
+            row = -1;
+            col = -1;
+            count = 0;
         }
         return result;
     }
