@@ -1,5 +1,6 @@
 package ru.job4j.task;
 
+import ru.job4j.array.FindLoop;
 /**
  * Class Task
  * Тестовая задача
@@ -18,11 +19,19 @@ public class Task {
      */
     public int[] merge(int[] left, int[] right) {
         int sizeForNewArray = left.length + right.length;
+        int first = left[0] < right[0] ? left[0] : right[0];
         int[] finishArray = new int[sizeForNewArray];
-        for (int index = 0, count = 0; index < left.length; index ++, count++) {
-            finishArray[count] = left[index];
-            finishArray[++count] = right[index];
+        //Объединяем массив в один
+        for (int index = 0; index < finishArray.length; index ++) {
+            if (index <= left.length - 1) {
+                finishArray[index] = left[index];
+            } else {
+                finishArray[index] = right[index - left.length];
+            }
         }
-        return finishArray;
+
+        FindLoop sort = new FindLoop();
+        int[] array = sort.sort(finishArray);
+        return array;
     }
 }

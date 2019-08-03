@@ -8,9 +8,9 @@ public class TaskTest {
     @Test
     public void mergeTwoArrays() {
         Task check = new Task();
-        int[] expected = {1, 2, 3, 4};
-        int[] inputLeft = {1, 3};
-        int[] inputRight = {2, 4};
+        int[] expected = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+        int[] inputLeft = {2, 3, 4, 5, 6, 7, 8};
+        int[] inputRight = {1, 9};
         int[] result = check.merge(inputLeft, inputRight);
         assertThat(result, is(expected));
     }
