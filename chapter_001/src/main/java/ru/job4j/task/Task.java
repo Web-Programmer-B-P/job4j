@@ -19,19 +19,25 @@ public class Task {
      */
     public int[] merge(int[] left, int[] right) {
         int sizeForNewArray = left.length + right.length;
-        int first = left[0] < right[0] ? left[0] : right[0];
         int[] finishArray = new int[sizeForNewArray];
-        //Объединяем массив в один
-        for (int index = 0; index < finishArray.length; index ++) {
-            if (index <= left.length - 1) {
-                finishArray[index] = left[index];
+        //Счетчики для индексации входящих массивов
+        int l = 0, r = 0;
+        for (int index = 0; index < finishArray.length; index++) {
+            if (l < left.length && r < right.length) {
+                if (left[l] < right[r]) {
+                    finishArray[index] = left[l];
+                    l++;
+                } else {
+                    finishArray[index] = right[r];
+                    r++;
+                }
+            } else if (l == left.length) {
+                finishArray[index] = right[r];
             } else {
-                finishArray[index] = right[index - left.length];
+                finishArray[index] = left[l];
             }
         }
-
-        FindLoop sort = new FindLoop();
-        int[] array = sort.sort(finishArray);
-        return array;
+        
+        return finishArray;
     }
 }

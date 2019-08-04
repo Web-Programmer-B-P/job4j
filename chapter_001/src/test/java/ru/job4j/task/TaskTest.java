@@ -14,4 +14,14 @@ public class TaskTest {
         int[] result = check.merge(inputLeft, inputRight);
         assertThat(result, is(expected));
     }
+
+    @Test
+    public void mergeTwoSameLenghtArrays() {
+        Task check = new Task();
+        int[] expected = {1, 2, 3, 4};
+        int[] inputLeft = {2, 4};
+        int[] inputRight = {1, 3};
+        int[] result = check.merge(inputLeft, inputRight);
+        assertThat(result, is(expected));
+    }
 }
