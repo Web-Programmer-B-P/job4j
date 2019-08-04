@@ -1,17 +1,23 @@
 package ru.job4j.loop;
 
+/**
+ * Class PrimeNumber
+ *
+ * @author Petr B.
+ * @version 1
+ * @since 04.08.2019
+ */
 public class PrimeNumber {
     public int calc(int finish) {
         int count = 0;
         for (int i = 2; i <= finish; i++) {
-            int checkNumber = 0;
+            int check = 0;
             for (int j = 1; j <= i; j++) {
                 if (i % j == 0) {
-                    checkNumber++;
+                    check++;
                 }
             }
-            //Если число делиться нацело больше двух раз, значит оно не простое.
-            if (checkNumber == 2) {
+            if (check == 2) {
                 count++;
             }
         }

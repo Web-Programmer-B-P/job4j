@@ -18,26 +18,25 @@ public class Task {
      * @return int[] объедененные массивы left и right
      */
     public int[] merge(int[] left, int[] right) {
-        int sizeForNewArray = left.length + right.length;
-        int[] finishArray = new int[sizeForNewArray];
-        //Счетчики для индексации входящих массивов
+        int size = left.length + right.length;
+        int[] result = new int[size];
         int l = 0, r = 0;
-        for (int index = 0; index < finishArray.length; index++) {
+        for (int index = 0; index < result.length; index++) {
             if (l < left.length && r < right.length) {
                 if (left[l] < right[r]) {
-                    finishArray[index] = left[l];
+                    result[index] = left[l];
                     l++;
                 } else {
-                    finishArray[index] = right[r];
+                    result[index] = right[r];
                     r++;
                 }
             } else if (l == left.length) {
-                finishArray[index] = right[r];
+                result[index] = right[r];
             } else {
-                finishArray[index] = left[l];
+                result[index] = left[l];
             }
         }
-        
-        return finishArray;
+
+        return result;
     }
 }

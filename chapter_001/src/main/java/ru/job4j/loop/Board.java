@@ -1,6 +1,19 @@
 package ru.job4j.loop;
 
+/**
+ * Class Board
+ *
+ * @author Petr B.
+ * @since 04.08.2019
+ * @version 1
+ */
 public class Board {
+    /**
+     * Метод paint
+     * @param width
+     * @param height
+     * @return
+     */
     public String paint(int width, int height) {
         StringBuilder screen = new StringBuilder();
         String ln = System.lineSeparator();
