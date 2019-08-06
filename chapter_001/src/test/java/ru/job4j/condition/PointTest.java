@@ -31,4 +31,11 @@ public class PointTest {
         second.info();
     }
 
+    @Test
+    public void whenUse3DMethod() {
+        Point primary = new Point(1, 2, 3);
+        double result = primary.distance3d(new Point(4, 5, 6));
+        double expected = 5.196152422706632;
+        assertThat(result, is(expected));
+    }
 }
