@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class Item {
@@ -12,6 +14,12 @@ public class Item {
         this.name = name;
         this.desc = desc;
         this.time = time;
+    }
+
+    public Item(String name, String desc) {
+        this.name = name;
+        this.desc = desc;
+        this.time = System.currentTimeMillis();
     }
 
     public String getId() {
@@ -38,8 +46,12 @@ public class Item {
         this.desc = desc;
     }
 
-    public long getTime() {
-        return time;
+    public String getTime() {
+        String correctTime;
+        SimpleDateFormat need = new SimpleDateFormat("dd MMM yyyy HH:mm");
+        Date resultdate = new Date(this.time);
+        correctTime = need.format(resultdate);
+        return correctTime;
     }
 
     public void setTime(long time) {
