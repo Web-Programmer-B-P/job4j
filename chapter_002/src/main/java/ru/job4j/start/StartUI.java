@@ -91,17 +91,21 @@ public class StartUI {
     }
 
     private void findByName() {
-        System.out.println("\n------------ Поиск всез заявок по названию --------------");
+        System.out.println("\n------------ Поиск всех заявок по названию --------------");
         String name = this.input.ask("Введите название заявки: ");
         Item[] allItemsByName = this.tracker.findByName(name);
-        System.out.println("\n------------ Результат поиска --------------");
-        for (int index = 0; index < allItemsByName.length; index++) {
-            System.out.println("\tЗаявка номер: " + ((int) index + 1));
-            System.out.println("\tID: " + allItemsByName[index].getId());
-            System.out.println("\tИмя: " + allItemsByName[index].getName());
-            System.out.println("\tОписание: " + allItemsByName[index].getDesc());
-            System.out.println("\tДата создания: " + allItemsByName[index].getTime());
-            System.out.println("==============================================");
+        if (allItemsByName.length > 0) {
+            System.out.println("\n------------ Результат поиска --------------");
+            for (int index = 0; index < allItemsByName.length; index++) {
+                System.out.println("\tЗаявка номер: " + ((int) index + 1));
+                System.out.println("\tID: " + allItemsByName[index].getId());
+                System.out.println("\tИмя: " + allItemsByName[index].getName());
+                System.out.println("\tОписание: " + allItemsByName[index].getDesc());
+                System.out.println("\tДата создания: " + allItemsByName[index].getTime());
+                System.out.println("==============================================");
+            }
+        } else {
+            System.out.println("Заявка с таким именем не найдена! Проверте имя еще раз!");
         }
     }
 
@@ -119,20 +123,25 @@ public class StartUI {
     private void updateItem() {
         System.out.println("\n------------ Обновление заявки --------------");
         String id = this.input.ask("Введите ID заявки которую будем обновлять: ");
-        String name = this.input.ask("Введите имя заявки: ");
-        String desc = this.input.ask("Введите описание заявки: ");
-        Item item = new Item(name, desc);
-        boolean update = this.tracker.replace(id, item);
-        if (update) {
-            Item newItem = this.tracker.findById(id);
-            System.out.println("\n---------- Результат обновления ----------------");
-            System.out.println("\nID: " + newItem.getId()
-                    + "\nИмя: " + newItem.getName()
-                    + "\nОписание: " + newItem.getDesc()
-                    + "\nДата: " + newItem.getTime()
-            );
+        Item check = this.tracker.findById(id);
+        if (check != null) {
+            String name = this.input.ask("Введите имя заявки: ");
+            String desc = this.input.ask("Введите описание заявки: ");
+            Item item = new Item(name, desc);
+            boolean update = this.tracker.replace(id, item);
+            if (update) {
+                Item newItem = this.tracker.findById(id);
+                System.out.println("\n---------- Результат обновления ----------------");
+                System.out.println("\nID: " + newItem.getId()
+                        + "\nИмя: " + newItem.getName()
+                        + "\nОписание: " + newItem.getDesc()
+                        + "\nДата: " + newItem.getTime()
+                );
+            } else {
+                System.out.println("Ошибка не удалось обновить!");
+            }
         } else {
-            System.out.println("Ошибка не удалось обновить!");
+            System.out.println("Такой заявки нет!");
         }
     }
 
@@ -150,7 +159,10 @@ public class StartUI {
         System.out.println("+-----------------------------------------------------+");
     }
 
-
+    /**
+     * Точка входа в консольное приложение
+     * @param args
+     */
     public static void main(String[] args) {
         new StartUI(new ConsoleInput(), new Tracker()).init();
     }
