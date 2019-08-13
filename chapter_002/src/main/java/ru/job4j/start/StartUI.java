@@ -1,6 +1,9 @@
-package ru.job4j.tracker;
+package ru.job4j.start;
 
-import java.util.Scanner;
+import ru.job4j.console.ConsoleInput;
+import ru.job4j.input.Input;
+import ru.job4j.item.Item;
+import ru.job4j.tracker.Tracker;
 
 public class StartUI {
     private static final String ADD_ITEM          = "0";
