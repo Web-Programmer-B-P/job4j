@@ -1,0 +1,20 @@
+package ru.job4j.square;
+
+import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+
+public class SquareTest {
+    @Test
+    public void whenTestDrawSquare() {
+        Square square = new Square();
+        assertThat(square.draw(),
+                is(
+                    new StringBuffer().
+                    append("xxxxxxxx").
+                    append("xccccccx").
+                    append("xccccccx").
+                    append("xccccccx").
+                    append("xxxxxxxx").toString()));
+    }
+}
