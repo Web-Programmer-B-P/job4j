@@ -16,17 +16,13 @@ public class StartUITest {
     private final PrintStream stdout = System.out;
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
     private static final String  MENU =
-            "+-----------------------------------------------------+"
-            + "\n+                      Меню.                          +"
-            + "\n+-----------------------------------------------------+\n"
-            + "+       0. Чтобы добавить новую заявку нажмите        +"
-            + "\n+       1. Показать все заявки                        +"
-            + "\n+       2. Найти заявку по ее ID                      +"
-            + "\n+       3. Найти все заявки по названию               +"
-            + "\n+       4. Удалить заявку по ID                       +"
-            + "\n+       5. Обновить заявку по ID                      +"
-            + "\n+       6. Выйти из программы нажмите                 +"
-            + "\n+-----------------------------------------------------+";
+              "0. Добавить новую заявку\n"
+            + "1. Показать все заявки\n"
+            + "2. Найти заявку по ID\n"
+            + "3. Найти заявку(ки) по её имени\n"
+            + "4. Удалить заявку по её ID\n"
+            + "5. Обновить заявку по её ID\n"
+            + "6. Выход из программы\n";
 
     @Before
     public void loadOutput() {
@@ -98,7 +94,7 @@ public class StartUITest {
                 is(
                     new StringBuffer().
                             append(this.MENU).
-                            append("\n\n------------ Вывод всех заявок --------------").
+                            append("\n------------ Вывод всех заявок --------------").
                             append("\n\tЗаявка номер: 1\n\tID: 11").
                             append("\n\tИмя: Третья\n\tОписание: Проверочная2").
                             append("\n\tДата создания: 01 янв. 1970 03:02").
@@ -107,7 +103,7 @@ public class StartUITest {
                             append("\n\tИмя: Первая\n\tОписание: Проверочная1").
                             append("\n\tДата создания: 01 янв. 1970 03:00").
                             append("\n==============================================\n").
-                            append(this.MENU).append(System.lineSeparator()).toString()
+                            append(this.MENU).toString()
                 )
         );
     }
@@ -126,12 +122,12 @@ public class StartUITest {
                 is(
                         new StringBuffer().
                                 append(this.MENU).
-                                append("\n\n------------ Поиск заявки --------------\n").
+                                append("\n------------ Поиск заявки --------------\n").
                                 append("\n------------ Результат поиска ---------\nID: 10").
                                 append("\nИмя: Первая\nОписание: Проверочная1").
                                 append("\nДата создания: 01 янв. 1970 03:00").
                                 append("\n======================================================\n\n").
-                                append(this.MENU + "\n").toString()
+                                append(this.MENU).toString()
                 )
         );
     }
@@ -152,7 +148,7 @@ public class StartUITest {
                 is(
                         new StringBuffer().
                                 append(this.MENU).
-                                append("\n\n------------ Поиск всех заявок по названию --------------\n").
+                                append("\n------------ Поиск всех заявок по названию --------------\n").
                                 append("\n------------ Результат поиска --------------\n").
                                 append("\tЗаявка номер: 1\n\tID: 15").
                                 append("\n\tИмя: Первая\n\tОписание: first").
@@ -162,7 +158,7 @@ public class StartUITest {
                                 append("\n\tИмя: Первая\n\tОписание: second").
                                 append("\n\tДата создания: 01 янв. 1970 03:00").
                                 append("\n==============================================\n").
-                                append(this.MENU + "\n").toString()
+                                append(this.MENU).toString()
                 )
         );
     }
@@ -179,13 +175,13 @@ public class StartUITest {
                 is(
                         new StringBuffer().
                                 append(this.MENU).
-                                append("\n\n------------ Обновление заявки --------------\n").
+                                append("\n------------ Обновление заявки --------------\n").
                                 append("\n---------- Результат обновления ----------------\n").
                                 append("\nID: 15").
                                 append("\nИмя: Updating").
                                 append("\nОписание: Second").
                                 append("\nДата: 01 янв. 1970 03:02\n").
-                                append(this.MENU + "\n").toString()
+                                append(this.MENU).toString()
                 )
         );
     }
@@ -202,9 +198,9 @@ public class StartUITest {
                 is(
                         new StringBuffer().
                                 append(this.MENU).
-                                append("\n\n------------ Удаление заявки --------------\n").
+                                append("\n------------ Удаление заявки --------------\n").
                                 append("Ваша заявка удалена!\n").
-                                append(this.MENU + "\n").toString()
+                                append(this.MENU).toString()
                 )
         );
     }
@@ -219,9 +215,9 @@ public class StartUITest {
                 is(
                         new StringBuffer().
                                 append(this.MENU).
-                                append("\n\n------------ Добавление новой заявки --------------\n").
+                                append("\n------------ Добавление новой заявки --------------\n").
                                 append("Новая заявка с getId : " + tracker.findAll()[0].getId() + "\n").
-                                append(this.MENU + "\n").toString()
+                                append(this.MENU).toString()
                 )
         );
     }
