@@ -15,6 +15,18 @@ import java.util.Arrays;
 public class StartUITest {
     private final PrintStream stdout = System.out;
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    private static final String  MENU =
+            "+-----------------------------------------------------+"
+            + "\n+                      Меню.                          +"
+            + "\n+-----------------------------------------------------+\n"
+            + "+       0. Чтобы добавить новую заявку нажмите        +"
+            + "\n+       1. Показать все заявки                        +"
+            + "\n+       2. Найти заявку по ее ID                      +"
+            + "\n+       3. Найти все заявки по названию               +"
+            + "\n+       4. Удалить заявку по ID                       +"
+            + "\n+       5. Обновить заявку по ID                      +"
+            + "\n+       6. Выйти из программы нажмите                 +"
+            + "\n+-----------------------------------------------------+";
 
     @Before
     public void loadOutput() {
@@ -85,18 +97,8 @@ public class StartUITest {
                 this.out.toString(),
                 is(
                     new StringBuffer().
-                            append("+-----------------------------------------------------+").
-                            append("\n+                      Меню.                          +").
-                            append("\n+-----------------------------------------------------+\n").
-                            append("+       0. Чтобы добавить новую заявку нажмите        +").
-                            append("\n+       1. Показать все заявки                        +").
-                            append("\n+       2. Найти заявку по ее ID                      +").
-                            append("\n+       3. Найти все заявки по названию               +").
-                            append("\n+       4. Удалить заявку по ID                       +").
-                            append("\n+       5. Обновить заявку по ID                      +").
-                            append("\n+       6. Выйти из программы нажмите                 +").
-                            append("\n+-----------------------------------------------------+\n").
-                            append("\n------------ Вывод всех заявок --------------").
+                            append(this.MENU).
+                            append("\n\n------------ Вывод всех заявок --------------").
                             append("\n\tЗаявка номер: 1\n\tID: 11").
                             append("\n\tИмя: Третья\n\tОписание: Проверочная2").
                             append("\n\tДата создания: 01 янв. 1970 03:02").
@@ -104,19 +106,122 @@ public class StartUITest {
                             append("\n\tЗаявка номер: 2\n\tID: 11").
                             append("\n\tИмя: Первая\n\tОписание: Проверочная1").
                             append("\n\tДата создания: 01 янв. 1970 03:00").
-                            append("\n==============================================").
-                            append("\n+-----------------------------------------------------+").
-                            append("\n+                      Меню.                          +").
-                            append("\n+-----------------------------------------------------+\n").
-                            append("+       0. Чтобы добавить новую заявку нажмите        +").
-                            append("\n+       1. Показать все заявки                        +").
-                            append("\n+       2. Найти заявку по ее ID                      +").
-                            append("\n+       3. Найти все заявки по названию               +").
-                            append("\n+       4. Удалить заявку по ID                       +").
-                            append("\n+       5. Обновить заявку по ID                      +").
-                            append("\n+       6. Выйти из программы нажмите                 +").
-                            append("\n+-----------------------------------------------------+").
-                            append(System.lineSeparator()).toString()
+                            append("\n==============================================\n").
+                            append(this.MENU).append(System.lineSeparator()).toString()
+                )
+        );
+    }
+
+    @Test
+    public void testOutPutFindById() {
+        Tracker tracker = new Tracker();
+        Item third = new Item("15", "Третья", "Проверочная2", 123434L);
+        Item first  = new Item("10", "Первая", "Проверочная1", 1234L);
+        tracker.add(third);
+        tracker.add(first);
+        String[] search = {"2", "10", "6"};
+        new StartUI(new StabInput(search), tracker).init();
+        assertThat(
+                this.out.toString(),
+                is(
+                        new StringBuffer().
+                                append(this.MENU).
+                                append("\n\n------------ Поиск заявки --------------\n").
+                                append("\n------------ Результат поиска ---------\nID: 10").
+                                append("\nИмя: Первая\nОписание: Проверочная1").
+                                append("\nДата создания: 01 янв. 1970 03:00").
+                                append("\n======================================================\n\n").
+                                append(this.MENU + "\n").toString()
+                )
+        );
+    }
+
+    @Test
+    public void testOutPutFindByName() {
+        Tracker tracker = new Tracker();
+        Item first = new Item("15", "Первая", "first", 123434L);
+        Item second  = new Item("10", "Первая", "second", 1234L);
+        Item third  = new Item("12", "Левая", "third", 1234L);
+        tracker.add(first);
+        tracker.add(second);
+        tracker.add(third);
+        String[] search = {"3", "Первая", "6"};
+        new StartUI(new StabInput(search), tracker).init();
+        assertThat(
+                this.out.toString(),
+                is(
+                        new StringBuffer().
+                                append(this.MENU).
+                                append("\n\n------------ Поиск всех заявок по названию --------------\n").
+                                append("\n------------ Результат поиска --------------\n").
+                                append("\tЗаявка номер: 1\n\tID: 15").
+                                append("\n\tИмя: Первая\n\tОписание: first").
+                                append("\n\tДата создания: 01 янв. 1970 03:02").
+                                append("\n==============================================\n").
+                                append("\tЗаявка номер: 2\n\tID: 10").
+                                append("\n\tИмя: Первая\n\tОписание: second").
+                                append("\n\tДата создания: 01 янв. 1970 03:00").
+                                append("\n==============================================\n").
+                                append(this.MENU + "\n").toString()
+                )
+        );
+    }
+
+    @Test
+    public void testOutPutUpdateItem() {
+        Tracker tracker = new Tracker();
+        Item first = new Item("15", "Первая", "Описание", 123434L);
+        tracker.add(first);
+        String[] search = {"5", "15", "Updating", "Second", "6"};
+        new StartUI(new StabInput(search), tracker).init();
+        assertThat(
+                this.out.toString(),
+                is(
+                        new StringBuffer().
+                                append(this.MENU).
+                                append("\n\n------------ Обновление заявки --------------\n").
+                                append("\n---------- Результат обновления ----------------\n").
+                                append("\nID: 15").
+                                append("\nИмя: Updating").
+                                append("\nОписание: Second").
+                                append("\nДата: 01 янв. 1970 03:02\n").
+                                append(this.MENU + "\n").toString()
+                )
+        );
+    }
+
+    @Test
+    public void testOutPutDeleteItem() {
+        Tracker tracker = new Tracker();
+        Item first = new Item("15", "Первая", "Описание", 123434L);
+        tracker.add(first);
+        String[] search = {"4", "15", "6"};
+        new StartUI(new StabInput(search), tracker).init();
+        assertThat(
+                this.out.toString(),
+                is(
+                        new StringBuffer().
+                                append(this.MENU).
+                                append("\n\n------------ Удаление заявки --------------\n").
+                                append("Ваша заявка удалена!\n").
+                                append(this.MENU + "\n").toString()
+                )
+        );
+    }
+
+    @Test
+    public void testOutPutAddItem() {
+        Tracker tracker = new Tracker();
+        String[] search = {"0", "Add Item", "This`s a new item!", "6"};
+        new StartUI(new StabInput(search), tracker).init();
+        assertThat(
+                this.out.toString(),
+                is(
+                        new StringBuffer().
+                                append(this.MENU).
+                                append("\n\n------------ Добавление новой заявки --------------\n").
+                                append("Новая заявка с getId : " + tracker.findAll()[0].getId() + "\n").
+                                append(this.MENU + "\n").toString()
                 )
         );
     }

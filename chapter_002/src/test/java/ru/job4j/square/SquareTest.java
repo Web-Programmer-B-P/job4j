@@ -10,11 +10,17 @@ public class SquareTest {
         Square square = new Square();
         assertThat(square.draw(),
                 is(
-                    new StringBuffer().
-                    append("xxxxxxxx").
-                    append("xccccccx").
-                    append("xccccccx").
-                    append("xccccccx").
-                    append("xxxxxxxx").toString()));
+                        new StringBuffer().
+                                append("xxxxxxxx").
+                                append(System.lineSeparator()).
+                                append("xccccccx").
+                                append(System.lineSeparator()).
+                                append("xccccccx").
+                                append(System.lineSeparator()).
+                                append("xccccccx").
+                                append(System.lineSeparator()).
+                                append("xxxxxxxx").toString()
+                )
+        );
     }
 }

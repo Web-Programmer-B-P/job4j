@@ -38,12 +38,19 @@ public class PaintTest {
                 is(
                     new StringBuffer().
                         append(".......^.......").
+                        append(System.lineSeparator()).
                         append("......^^^......").
+                        append(System.lineSeparator()).
                         append(".....^^^^^.....").
+                        append(System.lineSeparator()).
                         append("....^^^^^^^....").
+                        append(System.lineSeparator()).
                         append("...^^^^^^^^^...").
+                        append(System.lineSeparator()).
                         append("..^^^^^^^^^^^..").
+                        append(System.lineSeparator()).
                         append(".^^^^^^^^^^^^^.").
+                        append(System.lineSeparator()).
                         append("^^^^^^^^^^^^^^^").
                         append(System.lineSeparator()).toString()
                 )
@@ -58,9 +65,13 @@ public class PaintTest {
                 is(
                     new StringBuffer().
                         append("xxxxxxxx").
+                        append(System.lineSeparator()).
                         append("xccccccx").
+                        append(System.lineSeparator()).
                         append("xccccccx").
+                        append(System.lineSeparator()).
                         append("xccccccx").
+                        append(System.lineSeparator()).
                         append("xxxxxxxx").
                         append(System.lineSeparator()).toString()
                 )
