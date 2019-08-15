@@ -20,7 +20,9 @@ public class Tracker {
      * @param item новая заявка
      */
     public Item add(Item item) {
-        item.setId(this.generateId());
+        if (item.getId() == null) {
+            item.setId(this.generateId());
+        }
         this.items[this.position++] = item;
         return item;
     }

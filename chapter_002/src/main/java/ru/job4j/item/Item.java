@@ -22,6 +22,13 @@ public class Item {
         this.time = System.currentTimeMillis();
     }
 
+    public Item(String id, String name, String desc, long time) {
+        this.id = id;
+        this.name = name;
+        this.desc = desc;
+        this.time = time;
+    }
+
     public String getId() {
         return id;
     }
