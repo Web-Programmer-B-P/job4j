@@ -1,4 +1,4 @@
-package ru.job4j.exit.programm;
+package ru.job4j.exit;
 
 import ru.job4j.input.Input;
 import ru.job4j.tracker.Tracker;
@@ -12,7 +12,6 @@ public class ExitProgramm implements UserAction {
 
     @Override
     public void execute(Input input, Tracker tracker) {
-        String exit = "6";
     }
 
     @Override

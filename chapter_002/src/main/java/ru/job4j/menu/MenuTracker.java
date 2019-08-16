@@ -1,14 +1,14 @@
-package ru.job4j.menu.tracker;
+package ru.job4j.menu;
 
-import ru.job4j.add.item.AddItem;
+import ru.job4j.add.AddItem;
 import ru.job4j.delete.Delete;
-import ru.job4j.exit.programm.ExitProgramm;
-import ru.job4j.find.by.id.FindById;
-import ru.job4j.find.by.name.FindByName;
+import ru.job4j.exit.ExitProgramm;
+import ru.job4j.find.id.FindById;
+import ru.job4j.find.name.FindByName;
 import ru.job4j.input.Input;
-import ru.job4j.show.all.items.ShowAllItems;
+import ru.job4j.show.ShowAllItems;
 import ru.job4j.tracker.Tracker;
-import ru.job4j.update.item.UpdateItem;
+import ru.job4j.update.UpdateItem;
 import ru.job4j.user.action.UserAction;
 
 import java.util.ArrayList;

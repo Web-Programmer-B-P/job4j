@@ -1,4 +1,4 @@
-package ru.job4j.update.item;
+package ru.job4j.update;
 
 import ru.job4j.input.Input;
 import ru.job4j.item.Item;

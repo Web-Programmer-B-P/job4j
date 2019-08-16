@@ -1,4 +1,4 @@
-package ru.job4j.add.item;
+package ru.job4j.add;
 
 import ru.job4j.input.Input;
 import ru.job4j.item.Item;

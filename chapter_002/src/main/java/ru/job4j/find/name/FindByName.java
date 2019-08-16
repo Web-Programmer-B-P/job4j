@@ -1,4 +1,4 @@
-package ru.job4j.find.by.name;
+package ru.job4j.find.name;
 
 import ru.job4j.input.Input;
 import ru.job4j.item.Item;

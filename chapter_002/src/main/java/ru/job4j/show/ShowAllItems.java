@@ -1,4 +1,4 @@
-package ru.job4j.show.all.items;
+package ru.job4j.show;
 
 import ru.job4j.input.Input;
 import ru.job4j.item.Item;
