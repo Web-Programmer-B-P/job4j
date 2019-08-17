@@ -23,10 +23,11 @@ public class ConsoleInput implements Input {
                 break;
             }
         }
-        if (exist) {
-            return key;
-        } else {
-            throw new MenuOutException("Будте внимательны, вы вышли за предел!");
+
+        if (!exist) {
+            throw new MenuOutException("Вы вышли за придел имеющегося диапазона, повторите-ка ввод еще разок!");
         }
+
+        return key;
     }
 }

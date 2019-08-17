@@ -35,7 +35,7 @@ public class StabInput implements Input {
         if (exist) {
             return key;
         } else {
-            throw new MenuOutException("Будте внимательны, вы вышли за предел!");
+            throw new MenuOutException("Вы вышли за диапазон!");
         }
     }
 }

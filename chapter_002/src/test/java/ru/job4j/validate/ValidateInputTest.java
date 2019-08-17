@@ -35,7 +35,7 @@ public class ValidateInputTest {
         assertThat(
                 this.out.toString(),
                 is(
-                        String.format("Введите повторно пункт!%n")
+                        String.format("Вы ввели строку, а нужно число!%n")
                 )
         );
     }
@@ -50,7 +50,7 @@ public class ValidateInputTest {
         assertThat(
                 this.out.toString(),
                 is(
-                        String.format("Введите значение из диапазона!%n")
+                        String.format("Вы вышли за диапазон!%n")
                 )
         );
     }

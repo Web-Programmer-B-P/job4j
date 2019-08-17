@@ -22,13 +22,15 @@ public class ValidateInput implements Input {
         int value = -1;
         do {
             try {
-                return this.input.ask(question, range);
+                value = this.input.ask(question, range);
+                invalide = false;
             } catch (MenuOutException moe) {
-                System.out.println("Введите значение из диапазона!");
+                System.out.println(moe.getLocalizedMessage());
             } catch (NumberFormatException nfe) {
-                System.out.println("Введите повторно пункт!");
+                System.out.println("Вы ввели строку, а нужно число!");
             }
         } while (invalide);
+
         return value;
     }
 }
