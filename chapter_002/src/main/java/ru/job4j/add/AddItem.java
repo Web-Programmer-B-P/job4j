@@ -3,7 +3,7 @@ package ru.job4j.add;
 import ru.job4j.input.Input;
 import ru.job4j.item.Item;
 import ru.job4j.tracker.Tracker;
-import ru.job4j.user.action.UserAction;
+import ru.job4j.user.UserAction;
 
 public class AddItem implements UserAction {
     @Override

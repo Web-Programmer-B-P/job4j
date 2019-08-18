@@ -1,4 +1,4 @@
-package ru.job4j.user.action;
+package ru.job4j.user;
 
 import ru.job4j.input.Input;
 import ru.job4j.tracker.Tracker;

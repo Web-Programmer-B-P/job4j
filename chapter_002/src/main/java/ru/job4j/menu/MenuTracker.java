@@ -9,7 +9,7 @@ import ru.job4j.input.Input;
 import ru.job4j.show.ShowAllItems;
 import ru.job4j.tracker.Tracker;
 import ru.job4j.update.UpdateItem;
-import ru.job4j.user.action.UserAction;
+import ru.job4j.user.UserAction;
 
 import java.util.ArrayList;
 import java.util.List;
