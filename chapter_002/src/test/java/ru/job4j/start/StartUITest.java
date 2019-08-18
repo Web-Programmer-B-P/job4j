@@ -19,9 +19,9 @@ public class StartUITest {
               "0. Добавить новую заявку\n"
             + "1. Показать все заявки\n"
             + "2. Найти заявку по ID\n"
-            + "3. Найти заявку(ки) по её имени\n"
-            + "4. Удалить заявку по её ID\n"
-            + "5. Обновить заявку по её ID\n"
+            + "3. Найти заявку по её имени\n"
+            + "4. Обновить заявку по её ID\n"
+            + "5. Удалить заявку по ее ID\n"
             + "6. Выход из программы\n";
 
     @Before
@@ -47,7 +47,7 @@ public class StartUITest {
         Tracker track = new Tracker();
         Item in = new Item("Имя", "Описание");
         Item check = track.add(in);
-        new StartUI(new StabInput(new String[]{"5", check.getId(), "Новое имя", "Новое описание", "6"}), track).init();
+        new StartUI(new StabInput(new String[]{"4", check.getId(), "Новое имя", "Новое описание", "6"}), track).init();
         assertThat(track.findAll()[0].getName(), is("Новое имя"));
     }
 
@@ -74,7 +74,7 @@ public class StartUITest {
     public void whenDeleteItemById() {
         Tracker track = new Tracker();
         Item newItem = track.add(new Item("Новая", "Заявка"));
-        String[] search = {"4", newItem.getId(), "6"};
+        String[] search = {"5", newItem.getId(), "6"};
         new StartUI(new StabInput(search), track).init();
         boolean result = track.findById(newItem.getId()) == null;
         assertThat(result, is(true));
@@ -168,7 +168,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Item first = new Item("15", "Первая", "Описание", 123434L);
         tracker.add(first);
-        String[] search = {"5", "15", "Updating", "Second", "6"};
+        String[] search = {"4", "15", "Updating", "Second", "6"};
         new StartUI(new StabInput(search), tracker).init();
         assertThat(
                 this.out.toString(),
@@ -191,7 +191,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Item first = new Item("15", "Первая", "Описание", 123434L);
         tracker.add(first);
-        String[] search = {"4", "15", "6"};
+        String[] search = {"5", "15", "6"};
         new StartUI(new StabInput(search), tracker).init();
         assertThat(
                 this.out.toString(),

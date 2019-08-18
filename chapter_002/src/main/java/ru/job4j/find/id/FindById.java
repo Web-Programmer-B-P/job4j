@@ -1,16 +1,15 @@
 package ru.job4j.find.id;
 
+import ru.job4j.base.BaseAction;
 import ru.job4j.input.Input;
 import ru.job4j.item.Item;
 import ru.job4j.tracker.Tracker;
-import ru.job4j.user.UserAction;
 
-public class FindById implements UserAction {
-    @Override
-    public String key() {
-        return "FIND_ITEM_BY_ID";
+public class FindById extends BaseAction {
+
+    public FindById(int key, String name) {
+        super(key, name);
     }
-
     @Override
     public void execute(Input input, Tracker tracker) {
         System.out.println("\n------------ Поиск заявки --------------");
@@ -31,10 +30,5 @@ public class FindById implements UserAction {
         } else {
             System.out.println("Ошибка заявка не существует!");
         }
-    }
-
-    @Override
-    public String info() {
-        return "2. Найти заявку по ID";
     }
 }

@@ -18,6 +18,7 @@ public class MenuTracker {
     private final Input input;
     private final Tracker tracker;
     private List<UserAction> actions = new ArrayList<>();
+    private int position = 0;
 
 
     public MenuTracker(Input input, Tracker tracker) {
@@ -35,13 +36,13 @@ public class MenuTracker {
      * Метод заполнения списка действиями.
      */
     public void fillActions() {
-        this.actions.add(new AddItem());
-        this.actions.add(new ShowAllItems());
-        this.actions.add(new FindById());
-        this.actions.add(new FindByName());
-        this.actions.add(new Delete());
-        this.actions.add(new UpdateItem());
-        this.actions.add(new ExitProgramm());
+        this.actions.add(new AddItem(this.position++, "Добавить новую заявку"));
+        this.actions.add(new ShowAllItems(this.position++, "Показать все заявки"));
+        this.actions.add(new FindById(this.position++, "Найти заявку по ID"));
+        this.actions.add(new FindByName(this.position++, "Найти заявку по её имени"));
+        this.actions.add(new UpdateItem(this.position++, "Обновить заявку по её ID"));
+        this.actions.add(new Delete(this.position++, "Удалить заявку по ее ID"));
+        this.actions.add(new ExitProgramm(this.position++, "Выход из программы"));
     }
 
 

@@ -1,16 +1,15 @@
 package ru.job4j.find.name;
 
+import ru.job4j.base.BaseAction;
 import ru.job4j.input.Input;
 import ru.job4j.item.Item;
 import ru.job4j.tracker.Tracker;
-import ru.job4j.user.UserAction;
 
-public class FindByName implements UserAction {
-    @Override
-    public String key() {
-        return "FIND_ITEM_BY_NAME";
+public class FindByName extends BaseAction {
+
+    public FindByName(int key, String name) {
+        super(key, name);
     }
-
     @Override
     public void execute(Input input, Tracker tracker) {
         System.out.println("\n------------ Поиск всех заявок по названию --------------");
@@ -29,10 +28,5 @@ public class FindByName implements UserAction {
         } else {
             System.out.println("Заявка с таким именем не найдена! Проверте имя еще раз!");
         }
-    }
-
-    @Override
-    public String info() {
-        return "3. Найти заявку(ки) по её имени";
     }
 }

@@ -1,13 +1,12 @@
 package ru.job4j.delete;
 
+import ru.job4j.base.BaseAction;
 import ru.job4j.input.Input;
 import ru.job4j.tracker.Tracker;
-import ru.job4j.user.UserAction;
 
-public class Delete implements UserAction {
-    @Override
-    public String key() {
-        return "DELETE_ITEM";
+public class Delete extends BaseAction {
+    public Delete(int key, String name) {
+        super(key, name);
     }
 
     @Override
@@ -20,10 +19,5 @@ public class Delete implements UserAction {
         } else {
             System.out.println("Ошибка заявка не может быть удалена!");
         }
-    }
-
-    @Override
-    public String info() {
-        return "4. Удалить заявку по её ID";
     }
 }

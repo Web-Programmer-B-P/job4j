@@ -1,16 +1,14 @@
 package ru.job4j.show;
 
+import ru.job4j.base.BaseAction;
 import ru.job4j.input.Input;
 import ru.job4j.item.Item;
 import ru.job4j.tracker.Tracker;
-import ru.job4j.user.UserAction;
 
-public class ShowAllItems implements UserAction {
-    @Override
-    public String key() {
-        return "SHOW_ALL_ITEMS";
+public class ShowAllItems extends BaseAction {
+    public ShowAllItems(int key, String name) {
+        super(key, name);
     }
-
     @Override
     public void execute(Input input, Tracker tracker) {
         System.out.println("\n------------ Вывод всех заявок --------------");
@@ -29,8 +27,4 @@ public class ShowAllItems implements UserAction {
         }
     }
 
-    @Override
-    public String info() {
-        return "1. Показать все заявки";
-    }
 }

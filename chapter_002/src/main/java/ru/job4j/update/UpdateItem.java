@@ -1,14 +1,14 @@
 package ru.job4j.update;
 
+import ru.job4j.base.BaseAction;
 import ru.job4j.input.Input;
 import ru.job4j.item.Item;
 import ru.job4j.tracker.Tracker;
-import ru.job4j.user.UserAction;
 
-public class UpdateItem implements UserAction {
-    @Override
-    public String key() {
-        return "UPDATE_ITEM";
+public class UpdateItem extends BaseAction {
+
+    public UpdateItem(int key, String name) {
+        super(key, name);
     }
 
     @Override
@@ -35,10 +35,5 @@ public class UpdateItem implements UserAction {
         } else {
             System.out.println("Такой заявки нет!");
         }
-    }
-
-    @Override
-    public String info() {
-        return "5. Обновить заявку по её ID";
     }
 }
