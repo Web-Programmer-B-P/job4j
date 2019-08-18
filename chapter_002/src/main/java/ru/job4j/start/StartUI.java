@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StartUI {
-    private static final int EXIT = 6;
+    private boolean exit = true;
     private final Input input;
     private final Tracker tracker;
     private int key;
@@ -23,7 +23,7 @@ public class StartUI {
     public void init() {
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
         List<Integer> range = new ArrayList<>();
-        menu.fillActions();
+        menu.fillActions(this);
         for (int index = 0; index < menu.getActionsLentgh(); index++) {
             range.add(index);
         }
@@ -31,7 +31,11 @@ public class StartUI {
             menu.show();
             this.key = this.input.ask("Выберите пунткт: ", range);
             menu.select(this.key);
-        } while (this.key != EXIT);
+        } while (this.exit);
+    }
+
+    public void exit() {
+        this.exit = false;
     }
 
     /**

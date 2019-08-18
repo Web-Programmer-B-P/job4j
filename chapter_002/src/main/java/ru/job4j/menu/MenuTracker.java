@@ -7,6 +7,7 @@ import ru.job4j.find.id.FindById;
 import ru.job4j.find.name.FindByName;
 import ru.job4j.input.Input;
 import ru.job4j.show.ShowAllItems;
+import ru.job4j.start.StartUI;
 import ru.job4j.tracker.Tracker;
 import ru.job4j.update.UpdateItem;
 import ru.job4j.user.UserAction;
@@ -33,16 +34,17 @@ public class MenuTracker {
 
 
     /**
-     * Метод заполнения списка действиями.
+     *Метод заполнения списка действиями.
+     * @param stop дополнительный параметр для выхода из программы.
      */
-    public void fillActions() {
+    public void fillActions(StartUI stop) {
         this.actions.add(new AddItem(this.position++, "Добавить новую заявку"));
         this.actions.add(new ShowAllItems(this.position++, "Показать все заявки"));
         this.actions.add(new FindById(this.position++, "Найти заявку по ID"));
         this.actions.add(new FindByName(this.position++, "Найти заявку по её имени"));
         this.actions.add(new UpdateItem(this.position++, "Обновить заявку по её ID"));
         this.actions.add(new Delete(this.position++, "Удалить заявку по ее ID"));
-        this.actions.add(new ExitProgramm(this.position++, "Выход из программы"));
+        this.actions.add(new ExitProgramm(this.position++, "Выход из программы", stop));
     }
 
 
