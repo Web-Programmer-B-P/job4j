@@ -10,7 +10,7 @@ import java.util.Arrays;
  * @since 25.08.2019
  */
 public class CoffeeMashine {
-    private static final int COINS[] = {1, 2, 5, 10};
+    private static final int[] COINS = {1, 2, 5, 10};
     private int[] cashChange = new int[100];
 
     /**
