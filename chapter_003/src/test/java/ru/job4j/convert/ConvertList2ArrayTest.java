@@ -12,14 +12,13 @@ public class ConvertList2ArrayTest {
     public void when7ElementsThen9() {
         ConvertList2Array list = new ConvertList2Array();
         int[][] result = list.toArray(
-                Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13),
-                4
+                Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+                3
         );
         int[][] expect = {
                 {1, 2, 3, 4},
                 {5, 6, 7, 8},
-                {9, 10, 11, 12},
-                {13, 0, 0, 0}
+                {9, 10, 0, 0}
         };
         assertThat(result, is(expect));
     }
