@@ -2,6 +2,7 @@ package ru.job4j.priority;
 
 import ru.job4j.task.Task;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -21,19 +22,24 @@ public class PriorityQueue {
      * @param task задача
      */
     public void put(Task task) {
-        int index = this.tasks.size();
+        int i = 0;
         if (this.tasks.isEmpty()) {
-            this.tasks.add(index, task);
+            this.tasks.add(i, task);
         } else {
-            for (int i = 0; i < index; i++) {
-                if (this.tasks.get(i).getPriority() > task.getPriority()) {
+            Iterator<Task> itr = this.tasks.iterator();
+            while (itr.hasNext()) {
+                if (itr.next().getPriority() > task.getPriority()) {
                     this.tasks.add(i, task);
-                } else if (i == index - 1) {
+                    break;
+                } else if (!itr.hasNext()) {
                     this.tasks.add(i + 1, task);
+                    break;
                 }
+                i++;
             }
         }
     }
+
 
     public Task take() {
         return this.tasks.poll();
