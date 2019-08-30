@@ -1,10 +1,14 @@
 package ru.job4j.tracker;
 
 import org.junit.Test;
-import ru.job4j.item.Item;
+import ru.job4j.tracker.model.Item;
+import ru.job4j.tracker.storage.Tracker;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertArrayEquals;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 public class TrackerTest {
@@ -47,9 +51,9 @@ public class TrackerTest {
         tracker.add(row3);
         boolean status = tracker.delete(row.getId());
         assertThat(status, is(true));
-        Item[] result = tracker.findAll();
-        Item[] expected = {tracker.findById(row1.getId()), tracker.findById(row2.getId()), tracker.findById(row3.getId())};
-        assertArrayEquals(expected, result);
+        List<Item> result = tracker.findAll();
+        List<Item> expected = Arrays.asList(tracker.findById(row1.getId()), tracker.findById(row2.getId()), tracker.findById(row3.getId()));
+        assertEquals(expected, result);
     }
 
     @Test
@@ -61,9 +65,9 @@ public class TrackerTest {
         object.add(third);
         object.add(first);
         object.add(second);
-        Item[] result = object.findByName("Первая");
-        Item[] expected = {object.findById(first.getId()), object.findById(second.getId())};
-        assertArrayEquals(expected, result);
+        List<Item> result = object.findByName("Первая");
+        List<Item> expected = Arrays.asList(object.findById(first.getId()), object.findById(second.getId()));
+        assertEquals(expected, result);
     }
 
     @Test
@@ -73,9 +77,9 @@ public class TrackerTest {
         Item second = new Item("Первая", "Проверочная2", 123434L);
         object.add(first);
         object.add(second);
-        Item[] result = object.findAll();
-        Item[] expected = {object.findById(first.getId()), object.findById(second.getId())};
-        assertArrayEquals(expected, result);
+        List<Item> result = object.findAll();
+        List<Item> expected = Arrays.asList(object.findById(first.getId()), object.findById(second.getId()));
+        assertEquals(expected, result);
     }
 
     @Test

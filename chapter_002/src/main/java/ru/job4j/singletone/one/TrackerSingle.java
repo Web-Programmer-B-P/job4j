@@ -1,7 +1,7 @@
 package ru.job4j.singletone.one;
 
 
-import ru.job4j.item.Item;
+import ru.job4j.tracker.model.Item;
 
 import java.util.Arrays;
 import java.util.Random;
