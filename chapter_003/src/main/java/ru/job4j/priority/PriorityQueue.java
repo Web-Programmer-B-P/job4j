@@ -1,6 +1,6 @@
 package ru.job4j.priority;
 
-import ru.job4j.task.Task;
+import ru.job4j.priority.model.Task;
 
 import java.util.Iterator;
 import java.util.LinkedList;

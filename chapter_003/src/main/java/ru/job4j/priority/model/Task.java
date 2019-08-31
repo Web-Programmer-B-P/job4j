@@ -1,4 +1,4 @@
-package ru.job4j.task;
+package ru.job4j.priority.model;
 
 /**
  * Class Task

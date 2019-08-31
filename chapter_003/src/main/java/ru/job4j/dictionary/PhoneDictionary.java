@@ -1,6 +1,6 @@
 package ru.job4j.dictionary;
 
-import ru.job4j.search.Person;
+import ru.job4j.dictionary.model.Person;
 
 import java.util.ArrayList;
 import java.util.List;

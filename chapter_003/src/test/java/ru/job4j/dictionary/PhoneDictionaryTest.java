@@ -1,7 +1,7 @@
 package ru.job4j.dictionary;
 
 import org.junit.Test;
-import ru.job4j.search.Person;
+import ru.job4j.dictionary.model.Person;
 
 import java.util.List;
 import static org.hamcrest.core.Is.is;

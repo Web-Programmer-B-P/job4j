@@ -1,7 +1,7 @@
 package ru.job4j.priority;
 
 import org.junit.*;
-import ru.job4j.task.Task;
+import ru.job4j.priority.model.Task;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;

@@ -1,6 +1,7 @@
-package ru.job4j.convert;
+package ru.job4j.convert.array;
 
 import org.junit.Test;
+import ru.job4j.convert.array.ConvertList2Array;
 
 import java.util.ArrayList;
 import java.util.Arrays;

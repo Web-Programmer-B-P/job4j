@@ -1,4 +1,4 @@
-package ru.job4j.user;
+package ru.job4j.hash.model;
 
 public class User {
     private static int countOblet = 1;

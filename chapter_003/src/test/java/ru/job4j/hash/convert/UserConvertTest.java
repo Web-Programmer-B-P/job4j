@@ -1,7 +1,7 @@
-package ru.job4j.user.convert;
+package ru.job4j.hash.convert;
 
 import org.junit.Test;
-import ru.job4j.user.User;
+import ru.job4j.hash.model.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
