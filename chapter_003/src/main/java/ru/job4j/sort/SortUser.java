@@ -50,7 +50,7 @@ public class SortUser {
                     @Override
                     public int compare(User o1, User o2) {
                         int equals = o1.getName().compareTo(o2.getName());
-                        return equals == 0 ? (o1.getName() + o1.getAge()).compareTo(o2.getName() + o2.getAge()) : equals;
+                        return equals == 0 ? Integer.compare(o1.getAge(), o2.getAge()) : equals;
                     }
                 }
         );
