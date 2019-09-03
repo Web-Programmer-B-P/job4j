@@ -25,7 +25,7 @@ public class StartUITest {
             + "3. Найти заявку по её имени\n"
             + "4. Обновить заявку по её ID\n"
             + "5. Удалить заявку по ее ID\n"
-            + "6. Выход из программы\n";
+            + "6. Выход из программы";
 
     @Before
     public void loadOutput() {
@@ -86,27 +86,30 @@ public class StartUITest {
     @Test
     public void testOutPutAllItems() {
         Tracker tracker = new Tracker();
-        Item third = new Item("11", "Третья", "Проверочная2", 123434L);
+        Item third = new Item("12", "Третья", "Проверочная2", 123434L);
         Item first  = new Item("11", "Первая", "Проверочная1", 1234L);
         tracker.add(third);
         tracker.add(first);
         List<String> search = Arrays.asList("1", "6");
         new StartUI(new StabInput(search), tracker).init();
+        String time1 = tracker.findById("12").getTime();
+        String time2 = tracker.findById("11").getTime();
         assertThat(
                 this.out.toString(),
                 is(
-                    new StringBuffer().
-                            append(this.MENU).
-                            append("\n------------ Вывод всех заявок --------------").
-                            append("\n\tЗаявка номер: 1\n\tID: 11").
-                            append("\n\tИмя: Третья\n\tОписание: Проверочная2").
-                            append("\n\tДата создания: 01 янв. 1970 03:02").
-                            append("\n==============================================").
-                            append("\n\tЗаявка номер: 2\n\tID: 11").
-                            append("\n\tИмя: Первая\n\tОписание: Проверочная1").
-                            append("\n\tДата создания: 01 янв. 1970 03:00").
-                            append("\n==============================================\n").
-                            append(this.MENU).toString()
+                        new StringBuffer()
+                                .append(MENU + "\n")
+                                .append("\n------------ Вывод всех заявок --------------")
+                                .append("\n\tЗаявка номер: 1\n\tID: 12")
+                                .append("\n\tИмя: Третья\n\tОписание: Проверочная2")
+                                .append("\n\tДата создания: " + time1)
+                                .append("\n==============================================")
+                                .append("\n\tЗаявка номер: 2\n\tID: 11")
+                                .append("\n\tИмя: Первая\n\tОписание: Проверочная1")
+                                .append("\n\tДата создания: " + time2)
+                                .append("\n==============================================\n")
+                                .append(MENU)
+                                .append(System.lineSeparator()).toString()
                 )
         );
     }
@@ -120,17 +123,19 @@ public class StartUITest {
         tracker.add(first);
         List<String> search = Arrays.asList("2", "10", "6");
         new StartUI(new StabInput(search), tracker).init();
+        String time = tracker.findById("10").getTime();
         assertThat(
                 this.out.toString(),
                 is(
-                        new StringBuffer().
-                                append(this.MENU).
-                                append("\n------------ Поиск заявки --------------\n").
-                                append("\n------------ Результат поиска ---------\nID: 10").
-                                append("\nИмя: Первая\nОписание: Проверочная1").
-                                append("\nДата создания: 01 янв. 1970 03:00").
-                                append("\n======================================================\n\n").
-                                append(this.MENU).toString()
+                        new StringBuffer()
+                                .append(MENU + "\n")
+                                .append("\n------------ Поиск заявки --------------\n")
+                                .append("\n------------ Результат поиска ---------\nID: 10")
+                                .append("\nИмя: Первая\nОписание: Проверочная1")
+                                .append("\nДата создания: " + time)
+                                .append("\n======================================================\n\n")
+                                .append(MENU)
+                                .append(System.lineSeparator()).toString()
                 )
         );
     }
@@ -146,22 +151,25 @@ public class StartUITest {
         tracker.add(third);
         List<String> search = Arrays.asList("3", "Первая", "6");
         new StartUI(new StabInput(search), tracker).init();
+        String time1 = tracker.findById("15").getTime();
+        String time2 = tracker.findById("10").getTime();
         assertThat(
                 this.out.toString(),
                 is(
-                        new StringBuffer().
-                                append(this.MENU).
-                                append("\n------------ Поиск всех заявок по названию --------------\n").
-                                append("\n------------ Результат поиска --------------\n").
-                                append("\tЗаявка номер: 1\n\tID: 15").
-                                append("\n\tИмя: Первая\n\tОписание: first").
-                                append("\n\tДата создания: 01 янв. 1970 03:02").
-                                append("\n==============================================\n").
-                                append("\tЗаявка номер: 2\n\tID: 10").
-                                append("\n\tИмя: Первая\n\tОписание: second").
-                                append("\n\tДата создания: 01 янв. 1970 03:00").
-                                append("\n==============================================\n").
-                                append(this.MENU).toString()
+                        new StringBuffer()
+                                .append(MENU + "\n")
+                                .append("\n------------ Поиск всех заявок по названию --------------\n")
+                                .append("\n------------ Результат поиска --------------\n")
+                                .append("\tЗаявка номер: 1\n\tID: 15")
+                                .append("\n\tИмя: Первая\n\tОписание: first")
+                                .append("\n\tДата создания: " + time1)
+                                .append("\n==============================================\n")
+                                .append("\tЗаявка номер: 2\n\tID: 10")
+                                .append("\n\tИмя: Первая\n\tОписание: second")
+                                .append("\n\tДата создания: " + time2)
+                                .append("\n==============================================\n")
+                                .append(MENU)
+                                .append(System.lineSeparator()).toString()
                 )
         );
     }
@@ -177,15 +185,16 @@ public class StartUITest {
         assertThat(
                 this.out.toString(),
                 is(
-                        new StringBuffer().
-                                append(this.MENU).
-                                append("\n------------ Обновление заявки --------------\n").
-                                append("\n---------- Результат обновления ----------------\n").
-                                append("\nID: 15").
-                                append("\nИмя: Updating").
-                                append("\nОписание: Second").
-                                append("\nДата: " + date + "\n").
-                                append(this.MENU).toString()
+                        new StringBuffer()
+                                .append(MENU + "\n")
+                                .append("\n------------ Обновление заявки --------------\n")
+                                .append("\n---------- Результат обновления ----------------\n")
+                                .append("\nID: 15")
+                                .append("\nИмя: Updating")
+                                .append("\nОписание: Second")
+                                .append("\nДата: " + date + "\n")
+                                .append(MENU)
+                                .append(System.lineSeparator()).toString()
                 )
         );
     }
@@ -200,11 +209,12 @@ public class StartUITest {
         assertThat(
                 this.out.toString(),
                 is(
-                        new StringBuffer().
-                                append(this.MENU).
-                                append("\n------------ Удаление заявки --------------\n").
-                                append("Ваша заявка удалена!\n").
-                                append(this.MENU).toString()
+                        new StringBuffer()
+                                .append(MENU + "\n")
+                                .append("\n------------ Удаление заявки --------------\n")
+                                .append("Ваша заявка удалена!\n")
+                                .append(MENU)
+                                .append(System.lineSeparator()).toString()
                 )
         );
     }
@@ -217,11 +227,12 @@ public class StartUITest {
         assertThat(
                 this.out.toString(),
                 is(
-                        new StringBuffer().
-                                append(this.MENU).
-                                append("\n------------ Добавление новой заявки --------------\n").
-                                append("Новая заявка с getId : " + tracker.findAll().iterator().next().getId() + "\n").
-                                append(this.MENU).toString()
+                        new StringBuffer()
+                                .append(MENU + "\n")
+                                .append("\n------------ Добавление новой заявки --------------\n")
+                                .append("Новая заявка с getId : " + tracker.findAll().iterator().next().getId() + "\n")
+                                .append(MENU)
+                                .append(System.lineSeparator()).toString()
                 )
         );
     }
