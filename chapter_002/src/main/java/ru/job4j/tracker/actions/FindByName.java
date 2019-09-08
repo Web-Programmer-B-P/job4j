@@ -5,6 +5,7 @@ import ru.job4j.tracker.model.Item;
 import ru.job4j.tracker.storage.Tracker;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class FindByName extends BaseAction {
 
@@ -12,23 +13,23 @@ public class FindByName extends BaseAction {
         super(key, name);
     }
     @Override
-    public void execute(Input input, Tracker tracker) {
-        System.out.println("\n------------ Поиск всех заявок по названию --------------");
+    public void execute(Input input, Tracker tracker, Consumer<String> output) {
+        output.accept("\n------------ Поиск всех заявок по названию --------------");
         String name = input.ask("Введите название заявки: ");
         List<Item> allItemsByName = tracker.findByName(name);
         if (!allItemsByName.isEmpty()) {
-            System.out.println("\n------------ Результат поиска --------------");
+            output.accept("\n------------ Результат поиска --------------");
             int index = 0;
             for (Item el : allItemsByName) {
-                System.out.println("\tЗаявка номер: " + ((int) ++index));
-                System.out.println("\tID: " + el.getId());
-                System.out.println("\tИмя: " + el.getName());
-                System.out.println("\tОписание: " + el.getDesc());
-                System.out.println("\tДата создания: " + el.getTime());
-                System.out.println("==============================================");
+                output.accept("\tЗаявка номер: " + ((int) ++index));
+                output.accept("\tID: " + el.getId());
+                output.accept("\tИмя: " + el.getName());
+                output.accept("\tОписание: " + el.getDesc());
+                output.accept("\tДата создания: " + el.getTime());
+                output.accept("==============================================");
             }
         } else {
-            System.out.println("Заявка с таким именем не найдена! Проверте имя еще раз!");
+            output.accept("Заявка с таким именем не найдена! Проверте имя еще раз!");
         }
     }
 }

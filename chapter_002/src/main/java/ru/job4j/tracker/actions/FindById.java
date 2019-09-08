@@ -4,18 +4,20 @@ import ru.job4j.tracker.input.Input;
 import ru.job4j.tracker.model.Item;
 import ru.job4j.tracker.storage.Tracker;
 
+import java.util.function.Consumer;
+
 public class FindById extends BaseAction {
 
     public FindById(int key, String name) {
         super(key, name);
     }
     @Override
-    public void execute(Input input, Tracker tracker) {
-        System.out.println("\n------------ Поиск заявки --------------");
+    public void execute(Input input, Tracker tracker, Consumer<String> output) {
+        output.accept("\n------------ Поиск заявки --------------");
         String id = input.ask("Введите ID заявки: ");
         Item oneItem = tracker.findById(id);
         if (oneItem != null) {
-            System.out.println("\n------------ Результат поиска ---------"
+            output.accept("\n------------ Результат поиска ---------"
                     + "\nID: "
                     + oneItem.getId()
                     + "\nИмя: "
@@ -25,9 +27,9 @@ public class FindById extends BaseAction {
                     + "\nДата создания: "
                     + oneItem.getTime()
             );
-            System.out.println("======================================================\n");
+            output.accept("======================================================\n");
         } else {
-            System.out.println("Ошибка заявка не существует!");
+            output.accept("Ошибка заявка не существует!");
         }
     }
 }

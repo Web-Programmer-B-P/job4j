@@ -14,10 +14,23 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class StartUITest {
-    private final PrintStream stdout = System.out;
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    private final Consumer<String> output = new Consumer<String>() {
+        private final PrintStream stdout = new PrintStream(out);
+        @Override
+        public void accept(String s) {
+            stdout.println(s);
+        }
+
+        @Override
+        public String toString() {
+            return out.toString();
+        }
+    };
+
     private static final String  MENU =
               "0. Добавить новую заявку\n"
             + "1. Показать все заявки\n"
@@ -27,21 +40,13 @@ public class StartUITest {
             + "5. Удалить заявку по ее ID\n"
             + "6. Выход из программы";
 
-    @Before
-    public void loadOutput() {
-        System.setOut(new PrintStream(this.out));
-    }
 
-    @After
-    public void backOutput() {
-        System.setOut(this.stdout);
-    }
 
     @Test
     public void whenAddItem() {
         Tracker item = new Tracker();
         List<String> input = Arrays.asList("0", "Имя", "Описание", "6");
-        new StartUI(new StabInput(input), item).init();
+        new StartUI(new StabInput(input), item, this.output).init();
         assertThat(item.findAll().iterator().next().getName(), is("Имя"));
     }
 
@@ -50,7 +55,7 @@ public class StartUITest {
         Tracker track = new Tracker();
         Item in = new Item("Имя", "Описание");
         Item check = track.add(in);
-        new StartUI(new StabInput(Arrays.asList("4", check.getId(), "Новое имя", "Новое описание", "6")), track).init();
+        new StartUI(new StabInput(Arrays.asList("4", check.getId(), "Новое имя", "Новое описание", "6")), track, this.output).init();
         assertThat(track.findAll().iterator().next().getName(), is("Новое имя"));
     }
 
@@ -59,7 +64,7 @@ public class StartUITest {
         Tracker track = new Tracker();
         List<String> search = Arrays.asList("0", "Имя", "Описание1", "0", "Имя", "Описание2", "0", "Одна другая", "Описание3",
                            "0", "Имя", "Описание4", "3", "Имя", "6");
-        new StartUI(new StabInput(search), track).init();
+        new StartUI(new StabInput(search), track, this.output).init();
         assertThat(track.findByName("Имя").size(), is(3));
     }
 
@@ -68,7 +73,7 @@ public class StartUITest {
         Tracker track = new Tracker();
         Item newItem = track.add(new Item("Новая", "Заявка"));
         List<String> search = Arrays.asList("2", newItem.getId(), "6");
-        new StartUI(new StabInput(search), track).init();
+        new StartUI(new StabInput(search), track, this.output).init();
         String result = track.findById(newItem.getId()).getName();
         assertThat(result, is("Новая"));
     }
@@ -78,7 +83,7 @@ public class StartUITest {
         Tracker track = new Tracker();
         Item newItem = track.add(new Item("Новая", "Заявка"));
         List<String> search = Arrays.asList("5", newItem.getId(), "6");
-        new StartUI(new StabInput(search), track).init();
+        new StartUI(new StabInput(search), track, this.output).init();
         boolean result = track.findById(newItem.getId()) == null;
         assertThat(result, is(true));
     }
@@ -91,11 +96,11 @@ public class StartUITest {
         tracker.add(third);
         tracker.add(first);
         List<String> search = Arrays.asList("1", "6");
-        new StartUI(new StabInput(search), tracker).init();
+        new StartUI(new StabInput(search), tracker, output).init();
         String time1 = tracker.findById("12").getTime();
         String time2 = tracker.findById("11").getTime();
         assertThat(
-                this.out.toString(),
+                this.output.toString(),
                 is(
                         new StringBuffer()
                                 .append(MENU + "\n")
@@ -122,10 +127,10 @@ public class StartUITest {
         tracker.add(third);
         tracker.add(first);
         List<String> search = Arrays.asList("2", "10", "6");
-        new StartUI(new StabInput(search), tracker).init();
+        new StartUI(new StabInput(search), tracker, this.output).init();
         String time = tracker.findById("10").getTime();
         assertThat(
-                this.out.toString(),
+                this.output.toString(),
                 is(
                         new StringBuffer()
                                 .append(MENU + "\n")
@@ -150,11 +155,11 @@ public class StartUITest {
         tracker.add(second);
         tracker.add(third);
         List<String> search = Arrays.asList("3", "Первая", "6");
-        new StartUI(new StabInput(search), tracker).init();
+        new StartUI(new StabInput(search), tracker, this.output).init();
         String time1 = tracker.findById("15").getTime();
         String time2 = tracker.findById("10").getTime();
         assertThat(
-                this.out.toString(),
+                this.output.toString(),
                 is(
                         new StringBuffer()
                                 .append(MENU + "\n")
@@ -180,10 +185,10 @@ public class StartUITest {
         Item first = new Item("15", "Первая", "Описание", 123434L);
         tracker.add(first);
         List<String> search = Arrays.asList("4", "15", "Updating", "Second", "6");
-        new StartUI(new StabInput(search), tracker).init();
+        new StartUI(new StabInput(search), tracker, this.output).init();
         String date = tracker.findById("15").getTime();
         assertThat(
-                this.out.toString(),
+                this.output.toString(),
                 is(
                         new StringBuffer()
                                 .append(MENU + "\n")
@@ -205,9 +210,9 @@ public class StartUITest {
         Item first = new Item("15", "Первая", "Описание", 123434L);
         tracker.add(first);
         List<String> search = Arrays.asList("5", "15", "6");
-        new StartUI(new StabInput(search), tracker).init();
+        new StartUI(new StabInput(search), tracker, this.output).init();
         assertThat(
-                this.out.toString(),
+                this.output.toString(),
                 is(
                         new StringBuffer()
                                 .append(MENU + "\n")
@@ -223,9 +228,9 @@ public class StartUITest {
     public void testOutPutAddItem() {
         Tracker tracker = new Tracker();
         List<String> search = Arrays.asList("0", "Add Item", "This`s a new item!", "6");
-        new StartUI(new StabInput(search), tracker).init();
+        new StartUI(new StabInput(search), tracker, this.output).init();
         assertThat(
-                this.out.toString(),
+                this.output.toString(),
                 is(
                         new StringBuffer()
                                 .append(MENU + "\n")

@@ -14,17 +14,20 @@ import ru.job4j.tracker.actions.UserAction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class MenuTracker {
     private final Input input;
     private final Tracker tracker;
     private List<UserAction> actions = new ArrayList<>();
     private int position = 0;
+    private final Consumer<String> output;
 
 
-    public MenuTracker(Input input, Tracker tracker) {
+    public MenuTracker(Input input, Tracker tracker, Consumer<String> output) {
         this.input = input;
         this.tracker = tracker;
+        this.output = output;
     }
 
 
@@ -53,7 +56,7 @@ public class MenuTracker {
      * @param key
      */
     public void select(int key) {
-        this.actions.get(key).execute(this.input, this.tracker);
+        this.actions.get(key).execute(this.input, this.tracker, output);
     }
 
     /**
@@ -62,7 +65,7 @@ public class MenuTracker {
     public void show() {
         for (UserAction action : this.actions) {
             if (action != null) {
-                System.out.println(action.info());
+                output.accept(action.info());
             }
         }
     }

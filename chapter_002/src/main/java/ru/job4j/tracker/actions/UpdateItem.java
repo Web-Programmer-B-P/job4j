@@ -4,6 +4,8 @@ import ru.job4j.tracker.input.Input;
 import ru.job4j.tracker.model.Item;
 import ru.job4j.tracker.storage.Tracker;
 
+import java.util.function.Consumer;
+
 public class UpdateItem extends BaseAction {
 
     public UpdateItem(int key, String name) {
@@ -11,8 +13,8 @@ public class UpdateItem extends BaseAction {
     }
 
     @Override
-    public void execute(Input input, Tracker tracker) {
-        System.out.println("\n------------ Обновление заявки --------------");
+    public void execute(Input input, Tracker tracker, Consumer<String> output) {
+        output.accept("\n------------ Обновление заявки --------------");
         String id = input.ask("Введите ID заявки которую будем обновлять: ");
         Item check = tracker.findById(id);
         if (check != null) {
@@ -22,17 +24,17 @@ public class UpdateItem extends BaseAction {
             boolean update = tracker.replace(id, item);
             if (update) {
                 Item newItem = tracker.findById(id);
-                System.out.println("\n---------- Результат обновления ----------------");
-                System.out.println("\nID: " + newItem.getId()
+                output.accept("\n---------- Результат обновления ----------------");
+                output.accept("\nID: " + newItem.getId()
                         + "\nИмя: " + newItem.getName()
                         + "\nОписание: " + newItem.getDesc()
                         + "\nДата: " + newItem.getTime()
                 );
             } else {
-                System.out.println("Ошибка не удалось обновить!");
+                output.accept("Ошибка не удалось обновить!");
             }
         } else {
-            System.out.println("Такой заявки нет!");
+            output.accept("Такой заявки нет!");
         }
     }
 }
