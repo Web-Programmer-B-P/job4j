@@ -1,5 +1,6 @@
 package ru.job4j.tourists.model;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Objects;
  * @author Petr B.
  * @since 09.09.2019, 14:10
  */
-public class Address {
+public class Address implements Comparator<Address> {
     private String city;
     private String street;
     private int home;
@@ -38,6 +39,10 @@ public class Address {
         return apartment;
     }
 
+    @Override
+    public int compare(Address o1, Address o2) {
+        return o1.getCity().compareTo(o2.getCity());
+    }
 
     @Override
     public boolean equals(Object o) {
