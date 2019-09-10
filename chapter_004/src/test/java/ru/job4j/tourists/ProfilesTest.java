@@ -28,9 +28,9 @@ public class ProfilesTest {
         Profiles input = new Profiles();
         List<Address> result = input.collect(tourists);
         String expected = "[Address{city='Kazan', street='Lomonosova', home=1, apartment=23},"
-               + " Address{city='Vladivostok', street='Mamontova', home=34, apartment=88},"
-               + " Address{city='Sverdlovsk', street='Pushkina', home=10, apartment=43},"
-               + " Address{city='Piter', street='Piragova', home=90, apartment=276}]";
+                + " Address{city='Piter', street='Piragova', home=90, apartment=276},"
+                + " Address{city='Sverdlovsk', street='Pushkina', home=10, apartment=43},"
+                + " Address{city='Vladivostok', street='Mamontova', home=34, apartment=88}]";
         assertThat(result.toString(), is(expected));
     }
 
@@ -44,8 +44,8 @@ public class ProfilesTest {
         Profiles input = new Profiles();
         List<Address> result = input.collect(tourists);
         String expected = "[Address{city='Kazan', street='Lomonosova', home=1, apartment=23},"
-                + " Address{city='Sverdlovsk', street='Pushkina', home=10, apartment=43},"
-                + " Address{city='Piter', street='Piragova', home=90, apartment=276}]";
+                + " Address{city='Piter', street='Piragova', home=90, apartment=276},"
+                + " Address{city='Sverdlovsk', street='Pushkina', home=10, apartment=43}]";
         assertThat(result.toString(), is(expected));
     }
 }

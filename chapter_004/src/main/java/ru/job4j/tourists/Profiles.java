@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
  */
 public class Profiles {
     List<Address> collect(List<Profile> profiles) {
-        return profiles.stream().distinct().map(Profile::converTo).distinct().collect(Collectors.toList());
+        return profiles.stream()
+                .sorted((profile1, profile2) -> profile1.getAddress().getCity().compareTo(profile2.getAddress().getCity()))
+                .map(Profile::getAddress).distinct().collect(Collectors.toList());
     }
 }

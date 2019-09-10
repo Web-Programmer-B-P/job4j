@@ -15,24 +15,7 @@ public class Profile {
         this.address = address;
     }
 
-
-    public String getCity() {
-        return this.address.getCity();
-    }
-
-    public String getStreet() {
-        return this.address.getStreet();
-    }
-
-    public int getHome() {
-        return this.address.getHome();
-    }
-
-    public int getApartament() {
-        return this.address.getApartment();
-    }
-
-    public Address converTo() {
-        return new Address(this.getCity(), this.getStreet(), this.getHome(), this.getApartament());
+    public Address getAddress() {
+        return this.address;
     }
 }
