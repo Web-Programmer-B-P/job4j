@@ -1,7 +1,7 @@
-package ru.job4j.sort;
+package ru.job4j.student;
 
 import org.junit.Test;
-import ru.job4j.sort.model.User;
+import ru.job4j.student.model.User;
 
 import java.util.*;
 
