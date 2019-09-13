@@ -25,7 +25,7 @@ public class PhoneDictionary {
      */
     public List<Person> find(String key) {
         List<Person> result = new ArrayList<>();
-        for (Person coincidence : this.persons) {
+        for (var coincidence : this.persons) {
             if (coincidence.getName().contains(key) || coincidence.getSurname().contains(key)
                     || coincidence.getPhone().contains(key) || coincidence.getAddress().contains(key)) {
                 result.add(coincidence);

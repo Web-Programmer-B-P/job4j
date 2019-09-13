@@ -22,7 +22,7 @@ public class PriorityQueue {
      * @param task задача
      */
     public void put(Task task) {
-        int i = 0;
+        var i = 0;
         if (this.tasks.isEmpty()) {
             this.tasks.add(i, task);
         } else {
