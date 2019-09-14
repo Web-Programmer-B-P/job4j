@@ -1,4 +1,4 @@
-package ru.job4j.sort.model;
+package ru.job4j.student.model;
 
 import java.util.Objects;
 
