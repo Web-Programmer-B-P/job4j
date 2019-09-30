@@ -18,10 +18,11 @@
 
     <modules>
         <module>chapter_001</module>
-        <module>puzzle</module>
         <module>chapter_002</module>
         <module>chapter_003</module>
         <module>chapter_004</module>
+        <module>puzzle</module>
+        <module>tictactoe</module>
     </modules>
 
     <dependencies>
