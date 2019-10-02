@@ -1,9 +1,17 @@
-package ru.job4j.iterator;
+package ru.job4j.iterators.doublearray;
 
 import org.junit.Test;
 import org.junit.Before;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+
+/**
+ * Class JaggedArrayIteratorTest
+ *
+ * @author Petr B.
+ * @since 02.10.2019, 10:38
+ */
 
 /**
  * Class JaggedArrayIteratorTest

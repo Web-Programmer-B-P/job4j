@@ -1,8 +1,15 @@
-package ru.job4j.iterator;
+package ru.job4j.iterators.doublearray;
 
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+/**
+ * Class JaggedArrayIterator
+ *
+ * @author Petr B.
+ * @since 02.10.2019, 10:37
+ */
 
 /**
  * Class IteratorArray
