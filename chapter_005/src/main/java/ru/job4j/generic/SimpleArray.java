@@ -1,5 +1,6 @@
 package ru.job4j.generic;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -21,17 +22,11 @@ public class SimpleArray<T> implements Iterable<T> {
         if (this.position == this.data.length) {
             throw new ArrayIndexOutOfBoundsException();
         }
-        this.position++;
-        for (int index = 0; index < this.data.length; index++) {
-            if (this.data[index] == null) {
-                this.data[index] = model;
-                break;
-            }
-        }
+        this.data[this.position++] = model;
     }
 
     public void set(int index, T model) {
-        if (index < this.data.length) {
+        if (index < this.position) {
             this.data[index] = model;
         } else {
             throw new ArrayIndexOutOfBoundsException();
@@ -39,15 +34,21 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public void remove(int index) {
+        T[] arr = (T[]) new Object[this.data.length];
         if (index < this.data.length) {
-            this.data[index] = null;
             for (int i = 0; i < this.data.length; i++) {
-                if (this.data[i] == null && (i + 1) < this.data.length) {
-                    T el = this.data[this.data.length - 1];
-                    this.data[i + 1] = this.data[i];
-                    this.data[i] = el;
+                if (i == index) {
+                    this.data[i] = null;
                 }
             }
+
+            for (int o = 0, i = 0; o < this.data.length; o++) {
+                if (this.data[o] != null) {
+                    arr[i] = this.data[o];
+                    i++;
+                }
+            }
+            this.data = Arrays.copyOf(arr, this.data.length);
         } else {
             throw new ArrayIndexOutOfBoundsException();
         }
@@ -59,15 +60,13 @@ public class SimpleArray<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        T[] elements = this.data;
-
         return new Iterator<T>() {
             private int index = 0;
 
             @Override
             public boolean hasNext() {
                 boolean result = false;
-                if ((this.index + 1) <= elements.length) {
+                if (this.index < position && data[this.index] != null) {
                     result = true;
                 }
                 return result;
@@ -78,7 +77,7 @@ public class SimpleArray<T> implements Iterable<T> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return elements[this.index++];
+                return data[this.index++];
             }
         };
     }
