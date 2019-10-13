@@ -11,10 +11,10 @@ import java.util.Calendar;
 public class User {
     private String name;
     private int children;
-    private Calendar birthday;
+    private long birthday;
 
 
-    public User(String name, int children, Calendar birthday) {
+    public User(String name, int children, long birthday) {
         this.name = name;
         this.children = children;
         this.birthday = birthday;
@@ -28,7 +28,7 @@ public class User {
         return children;
     }
 
-    public Calendar getBirthday() {
+    public long getBirthday() {
         return birthday;
     }
 
