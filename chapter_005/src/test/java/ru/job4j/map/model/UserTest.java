@@ -21,10 +21,7 @@ public class UserTest {
         Map<User, Object> storage = new HashMap<>();
         storage.put(new User("Alibaba", 40, date), new User("Neo", 1, date));
         storage.put(new User("Alibaba", 40, date), new User("Neo", 1, date));
-        String expected = "{User{name='Alibaba', children=40, birthday=13112019}="
-                        + "User{name='Neo', children=1, birthday=13112019}, "
-                        + "User{name='Alibaba', children=40, birthday=13112019}="
-                        + "User{name='Neo', children=1, birthday=13112019}}";
+        String expected = "{User{name='Alibaba', children=40, birthday=13112019}=User{name='Neo', children=1, birthday=13112019}}";
         assertThat(storage.toString(), is(expected));
     }
 }
