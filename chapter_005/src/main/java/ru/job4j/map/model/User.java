@@ -1,6 +1,6 @@
 package ru.job4j.map.model;
 
-import java.util.Calendar;
+import java.util.Objects;
 
 /**
  * Class User
@@ -40,5 +40,10 @@ public class User {
                 + ", children=" + children
                 + ", birthday=" + birthday
                 + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, children, birthday);
     }
 }
