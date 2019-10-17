@@ -1,6 +1,5 @@
 package ru.job4j.list.node;
 
-import java.util.Objects;
 
 /**
  * Class Node
