@@ -54,6 +54,10 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E>, Iterable<E>
         };
     }
 
+    public boolean isBinary() {
+        return numberOfElements <= 2;
+    }
+
     @Override
     public boolean add(E parent, E child) {
         boolean result = false;
