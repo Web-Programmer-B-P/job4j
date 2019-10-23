@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class Tree<E extends Comparable<E>> implements SimpleTree<E>, Iterable<E> {
     private Node<E> root;
-    private int numberOfElements = 1;
+    private Queue<Node<E>> data = new LinkedList<>();
 
     public Tree(E r) {
         root = new Node<>(r);
@@ -20,60 +20,55 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E>, Iterable<E>
 
     @Override
     public Iterator<E> iterator() {
-        List<E> elementsOfTree = new ArrayList<>();
-        Queue<Node<E>> data = new LinkedList<>();
         data.offer(root);
-        while (!data.isEmpty()) {
-            Node<E> el = data.poll();
-            if (!(elementsOfTree.contains(el.getValue()))) {
-                elementsOfTree.add(el.getValue());
-            }
-            for (Node<E> nextChild : el.leaves()) {
-                data.offer(nextChild);
-            }
-        }
         return new Iterator<E>() {
-            private int index;
+            private Node<E> prevValue;
+            private Node<E> nextValue;
+            private int index = -1;
 
             @Override
             public boolean hasNext() {
-                boolean result = false;
-                if (index < numberOfElements) {
-                    result = true;
-                }
+                boolean result = index == -1 && root != null || nextValue != null;
+                index++;
                 return result;
             }
 
             @Override
             public E next() {
+                Node<E> el = data.poll();
+                if (prevValue == null && el != null) {
+                    prevValue = el;
+                } else {
+                    prevValue = nextValue;
+                    nextValue = el;
+                }
+                if (el != null) {
+                    for (Node<E> nextChild : el.leaves()) {
+                        data.offer(nextChild);
+                    }
+                }
+                if (nextValue == null) {
+                    nextValue = data.poll();
+                }
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return elementsOfTree.get(index++);
+                return prevValue.getValue();
             }
         };
-    }
-
-    public boolean isBinary() {
-        return numberOfElements <= 2;
     }
 
     @Override
     public boolean add(E parent, E child) {
         boolean result = false;
-        Queue<Node<E>> data = new LinkedList<>();
-        data.offer(root);
-        while (!data.isEmpty()) {
-            Node<E> el = data.poll();
-            if (el.eqValue(parent)) {
-                el.add(new Node<>(child));
-                numberOfElements++;
-                result = true;
-                break;
-            }
-            for (Node<E> nextChild : el.leaves()) {
-                data.offer(nextChild);
-            }
+        if (findBy(parent).isPresent() && findBy(child).isEmpty()) {
+            findBy(parent).get().add(new Node<E>(child));
+            result = true;
+        }
+        if (findBy(parent).isEmpty() && findBy(child).isEmpty()) {
+            root.add(new Node<E>(parent));
+            findBy(parent).get().add(new Node<E>(child));
+            result = true;
         }
         return result;
     }
@@ -94,5 +89,21 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E>, Iterable<E>
             }
         }
         return rsl;
+    }
+
+    public boolean isBinary() {
+        data.offer(root);
+        boolean result = true;
+        while (!data.isEmpty()) {
+            Node<E> el = data.poll();
+            if (el.leaves().size() > 2) {
+                result = false;
+                break;
+            }
+            for (Node<E> child : el.leaves()) {
+                data.offer(child);
+            }
+        }
+        return result;
     }
 }

@@ -2,11 +2,12 @@ package ru.job4j.tree;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.Is.*;
 
 /**
  * Class TreeTest
@@ -57,9 +58,34 @@ public class TreeTest {
     }
 
     @Test
+    public void whenCheckIteratorAtStart() {
+        Tree<Integer> tree = new Tree<Integer>(1);
+        Iterator<Integer> itr = tree.iterator();
+        assertThat(itr.hasNext(), is(true));
+    }
+
+    @Test
+    public void whenTreeIsNotBinary() {
+        Tree<Integer> tree = new Tree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(2, 4);
+        tree.add(2, 5);
+        tree.add(3, 6);
+        tree.add(3, 7);
+        tree.add(3, 8);
+        assertThat(tree.isBinary(), is(false));
+    }
+
+    @Test
     public void whenTreeIsBinary() {
         Tree<Integer> tree = new Tree<>(1);
         tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(2, 4);
+        tree.add(2, 5);
+        tree.add(3, 6);
+        tree.add(3, 7);
         assertThat(tree.isBinary(), is(true));
     }
 }
