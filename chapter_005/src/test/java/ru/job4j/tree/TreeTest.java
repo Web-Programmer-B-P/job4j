@@ -1,11 +1,7 @@
 package ru.job4j.tree;
 
 import org.junit.Test;
-
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
-
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.is;
 
@@ -49,10 +45,15 @@ public class TreeTest {
         tree.add(4, 5);
         tree.add(5, 6);
         Iterator<Integer> itr = tree.iterator();
+        itr.hasNext();
         itr.next();
+        itr.hasNext();
         itr.next();
+        itr.hasNext();
         itr.next();
+        itr.hasNext();
         itr.next();
+        itr.hasNext();
         itr.next();
         assertThat(itr.hasNext(), is(true));
     }

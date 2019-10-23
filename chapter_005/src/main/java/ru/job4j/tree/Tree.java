@@ -1,7 +1,6 @@
 package ru.job4j.tree;
 
 import ru.job4j.tree.interfaces.SimpleTree;
-
 import java.util.*;
 
 /**
@@ -22,38 +21,22 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E>, Iterable<E>
     public Iterator<E> iterator() {
         data.offer(root);
         return new Iterator<E>() {
-            private Node<E> prevValue;
-            private Node<E> nextValue;
-            private int index = -1;
-
             @Override
             public boolean hasNext() {
-                boolean result = index == -1 && root != null || nextValue != null;
-                index++;
+                boolean result = !data.isEmpty();
                 return result;
             }
 
             @Override
             public E next() {
                 Node<E> el = data.poll();
-                if (prevValue == null && el != null) {
-                    prevValue = el;
-                } else {
-                    prevValue = nextValue;
-                    nextValue = el;
-                }
                 if (el != null) {
-                    for (Node<E> nextChild : el.leaves()) {
-                        data.offer(nextChild);
-                    }
-                }
-                if (nextValue == null) {
-                    nextValue = data.poll();
+                    data.addAll(el.leaves());
                 }
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return prevValue.getValue();
+                return el.getValue();
             }
         };
     }
