@@ -1,6 +1,7 @@
 package ru.job4j.tree;
 
 import ru.job4j.tree.interfaces.SimpleTree;
+
 import java.util.*;
 
 /**
@@ -11,7 +12,6 @@ import java.util.*;
  */
 public class Tree<E extends Comparable<E>> implements SimpleTree<E>, Iterable<E> {
     private Node<E> root;
-    private Queue<Node<E>> data = new LinkedList<>();
 
     public Tree(E r) {
         root = new Node<>(r);
@@ -19,6 +19,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E>, Iterable<E>
 
     @Override
     public Iterator<E> iterator() {
+        Queue<Node<E>> data = new LinkedList<>();
         data.offer(root);
         return new Iterator<E>() {
             @Override
@@ -47,8 +48,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E>, Iterable<E>
         if (findBy(parent).isPresent() && findBy(child).isEmpty()) {
             findBy(parent).get().add(new Node<E>(child));
             result = true;
-        }
-        if (findBy(parent).isEmpty() && findBy(child).isEmpty()) {
+        } else {
             root.add(new Node<E>(parent));
             findBy(parent).get().add(new Node<E>(child));
             result = true;
@@ -75,15 +75,16 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E>, Iterable<E>
     }
 
     public boolean isBinary() {
+        Queue<Node<E>> data = new LinkedList<>();
         data.offer(root);
         boolean result = true;
         while (!data.isEmpty()) {
             Node<E> el = data.poll();
-            if (el.leaves().size() > 2) {
-                result = false;
-                break;
-            }
             for (Node<E> child : el.leaves()) {
+                if (el.leaves().size() > 2) {
+                    result = false;
+                    break;
+                }
                 data.offer(child);
             }
         }
