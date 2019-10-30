@@ -9,12 +9,12 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 /**
- * Class Zip
+ * Class Main
  *
  * @author Petr B.
  * @since 28.10.2019, 16:33
  */
-public class Zip {
+public class Main {
     private Search search = new Search();
 
     public void pack(List<File> source, File target) {
@@ -35,7 +35,7 @@ public class Zip {
     }
 
     public static void main(String[] args) {
-        Zip zip = new Zip();
+        Main zip = new Main();
         Args call = new Args(args);
         zip.pack(zip.seekBy(call.getDirectory(), call.getExclude()), new File(call.getOutput()));
     }
