@@ -1,10 +1,7 @@
 package ru.job4j.io.search;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Class Search
@@ -21,7 +18,7 @@ import java.util.Queue;
  */
 public class Search {
     public List<File> file(String pathSearch, List<String> exts) {
-        List<File> res = new ArrayList<>();
+        Set<File> r = new LinkedHashSet<>();
         Queue<File> data = new LinkedList<>();
         data.offer(new File(pathSearch));
         while (!data.isEmpty()) {
@@ -34,10 +31,11 @@ public class Search {
             }
             if (newPath.isFile()) {
                 if (checkExtInList(exts, findExt(newPath))) {
-                    res.add(new File(newPath.getName()));
+                    r.add(new File(newPath.getName()));
                 }
             }
         }
+        List<File> res = new ArrayList<>(r);
         return res;
     }
 

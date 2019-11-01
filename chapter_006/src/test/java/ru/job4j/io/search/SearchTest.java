@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,51 +15,57 @@ import static org.hamcrest.core.Is.*;
 /**
  * Class SearchTest
  *
- *                      Tree root directory
- *                               root
- *                                 |
- *                  |--------------|--------------|
- *                dir1            dir2           dir3
- *              first.txt       exam.cvs          |
- *              kilo.xml        linked.pom       red
- *              list.css        newFile.txt      name.txt
- *              sub_dir/
- *                  |
- *              example.com
- *              file.txt
- *              ===============================================
- *              total: 4 txt, 1 xml, 1 css, 1 com, 1 cvs, 1 pom
+ *                                      Tree root directory
+ *                                              root
+ *                                               |
+ *                                |--------------|--------------|
+ *                              dir1                           dir3
+ *                            first.txt                         |
+ *                            kilo.xml                         red
+ *                                                          name.txt
+ *                            ======================================
+ *                            total: 2 txt, 1 xml
+ *
  * @author Petr B.
  * @since 27.10.2019, 15:25
  */
 public class SearchTest {
-    private String rootPath;
+    private File rootPath;
     private List<File> files;
     private List<String> ext = new ArrayList<>();
 
     @Before
     public void setUp() throws Exception {
         File tmp = new File(System.getProperty("java.io.tmpdir"));
-        rootPath = tmp + "/root";
+        rootPath = new File(tmp, "root");
+        File rootDir1 = new File(rootPath, "/dir1");
+        File rootDir3Red = new File(rootPath, "/dir3/red");
+        rootPath.mkdir();
+        rootDir1.mkdirs();
+        rootDir3Red.mkdirs();
+        new FileOutputStream(rootDir1.getPath() + "/first.txt");
+        new FileOutputStream(rootDir1.getPath() + "/kilo.xml");
+        new FileOutputStream(rootDir3Red.getPath() + "/name.txt");
         ext.add("txt");
-        ext.add("pom");
         ext.add("xml");
-        ext.add("css");
-        ext.add("com");
-        ext.add("cvs");
     }
 
     @Test
     public void whenWolkInTree() throws IOException {
         Search call = new Search();
-        files = call.file(rootPath, ext);
-        assertThat(files.size(), is(9));
+        assertThat(
+                call.file(rootPath.getPath(), ext).size(),
+                is(3)
+        );
     }
 
     @Test
     public void whenShowFile() throws IOException {
         Search call = new Search();
-        files = call.file(rootPath, ext);
-        assertThat(files.get(0).getName(), is("linked.pom"));
+        assertThat(
+                call.file(
+                        rootPath.getPath(), ext).get(2).getName(),
+                is("name.txt")
+        );
     }
 }
