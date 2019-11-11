@@ -10,6 +10,10 @@ public class Item {
     private String desc;
     private long time;
 
+    public Item() {
+
+    }
+
     public Item(String name, String desc, long time) {
         this.name = name;
         this.desc = desc;
@@ -59,6 +63,10 @@ public class Item {
         Date resultdate = new Date(this.time);
         correctTime = need.format(resultdate);
         return correctTime;
+    }
+
+    public long getLongTime() {
+        return time;
     }
 
     public void setTime(long time) {

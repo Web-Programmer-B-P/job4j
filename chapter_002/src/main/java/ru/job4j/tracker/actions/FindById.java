@@ -1,9 +1,10 @@
 package ru.job4j.tracker.actions;
 
-import ru.job4j.tracker.input.Input;
+import ru.job4j.tracker.interfaces.Input;
 import ru.job4j.tracker.model.Item;
-import ru.job4j.tracker.storage.Tracker;
+import ru.job4j.tracker.interfaces.ITracker;
 
+import java.sql.SQLException;
 import java.util.function.Consumer;
 
 public class FindById extends BaseAction {
@@ -12,7 +13,7 @@ public class FindById extends BaseAction {
         super(key, name);
     }
     @Override
-    public void execute(Input input, Tracker tracker, Consumer<String> output) {
+    public void execute(Input input, ITracker tracker, Consumer<String> output) throws SQLException {
         output.accept("\n------------ Поиск заявки --------------");
         String id = input.ask("Введите ID заявки: ");
         Item oneItem = tracker.findById(id);

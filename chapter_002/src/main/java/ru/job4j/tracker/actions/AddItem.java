@@ -1,9 +1,10 @@
 package ru.job4j.tracker.actions;
 
-import ru.job4j.tracker.input.Input;
+import ru.job4j.tracker.interfaces.Input;
 import ru.job4j.tracker.model.Item;
-import ru.job4j.tracker.storage.Tracker;
+import ru.job4j.tracker.interfaces.ITracker;
 
+import java.sql.SQLException;
 import java.util.function.Consumer;
 
 public class AddItem extends BaseAction {
@@ -13,12 +14,11 @@ public class AddItem extends BaseAction {
     }
 
     @Override
-    public void execute(Input input, Tracker tracker, Consumer<String> output) {
+    public void execute(Input input, ITracker tracker, Consumer<String> output) throws SQLException {
         output.accept("\n------------ Добавление новой заявки --------------");
         String name = input.ask("Введите имя заявки: ");
         String desc = input.ask("Введите описание заявки: ");
         Item item = new Item(name, desc);
-        tracker.add(item);
-        output.accept("Новая заявка с getId : " + item.getId());
+        output.accept("Новая заявка с getId : " + tracker.add(item));
     }
 }
