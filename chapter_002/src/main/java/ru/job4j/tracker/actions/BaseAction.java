@@ -1,8 +1,10 @@
 package ru.job4j.tracker.actions;
 
-import ru.job4j.tracker.input.Input;
-import ru.job4j.tracker.storage.Tracker;
+import ru.job4j.tracker.interfaces.Input;
+import ru.job4j.tracker.interfaces.ITracker;
+import ru.job4j.tracker.interfaces.UserAction;
 
+import java.sql.SQLException;
 import java.util.function.Consumer;
 
 public abstract class BaseAction implements UserAction {
@@ -16,13 +18,13 @@ public abstract class BaseAction implements UserAction {
 
     @Override
     public int key() {
-        return this.key;
+        return key;
     }
 
     @Override
     public String info() {
-        return String.format("%s. %s", this.key, this.name);
+        return String.format("%s. %s", key, name);
     }
 
-    public abstract void execute(Input input, Tracker tracker, Consumer<String> output);
+    public abstract void execute(Input input, ITracker tracker, Consumer<String> output) throws SQLException;
 }
