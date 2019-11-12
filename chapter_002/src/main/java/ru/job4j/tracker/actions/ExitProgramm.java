@@ -1,9 +1,8 @@
 package ru.job4j.tracker.actions;
 
-import ru.job4j.tracker.input.Input;
+import ru.job4j.tracker.interfaces.Input;
 import ru.job4j.tracker.StartUI;
-import ru.job4j.tracker.storage.Tracker;
-
+import ru.job4j.tracker.interfaces.ITracker;
 import java.util.function.Consumer;
 
 public class ExitProgramm extends BaseAction {
@@ -16,7 +15,7 @@ public class ExitProgramm extends BaseAction {
 
 
     @Override
-    public void execute(Input input, Tracker tracker, Consumer<String> output) {
+    public void execute(Input input, ITracker tracker, Consumer<String> output) {
         this.stop.exit();
     }
 }
