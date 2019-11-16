@@ -16,6 +16,7 @@ import java.util.Properties;
  * @since 09.11.2019, 14:18
  */
 public class TrackerSQL implements ITracker, AutoCloseable {
+
     private Connection connection;
     private static final String CREATE_TABLE = "CREATE TABLE item ("
             + "id serial PRIMARY KEY,"
