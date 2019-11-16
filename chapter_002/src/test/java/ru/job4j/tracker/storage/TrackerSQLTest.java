@@ -3,8 +3,13 @@ package ru.job4j.tracker.storage;
 import org.junit.Before;
 import org.junit.Test;
 import ru.job4j.tracker.model.Item;
+import ru.job4j.tracker.proxy.ConnectionRollback;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -17,10 +22,32 @@ import static org.junit.Assert.assertThat;
 public class TrackerSQLTest {
     private TrackerSQL track;
 
+    public Connection init() {
+        try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties")) {
+            Properties config = new Properties();
+            config.load(in);
+            Class.forName(config.getProperty("driver-class-name"));
+            return DriverManager.getConnection(
+                    config.getProperty("url"),
+                    config.getProperty("username"),
+                    config.getProperty("password")
+
+
+            );
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
     @Before
     public void setUp() throws Exception {
-        track = new TrackerSQL();
-        track.init();
+        track = new TrackerSQL(ConnectionRollback.create(init()));
+    }
+
+    @Test
+    public void createItem() throws SQLException {
+        track.add(new Item("name", "desc"));
+        assertThat(track.findByName("name").size(), is(1));
     }
 
     @Test
@@ -56,7 +83,6 @@ public class TrackerSQLTest {
 
     @Test
     public void whenFindByName() throws SQLException {
-        track.deleteAllData();
         track.add(new Item("UniqueName", "this is fist unique item", 1234L));
         track.add(new Item("UniqueName", "it is other one", 1234L));
         List<Item> res = track.findByName("UniqueName");

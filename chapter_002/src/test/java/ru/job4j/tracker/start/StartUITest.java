@@ -7,26 +7,48 @@ import static org.junit.Assert.assertThat;
 import ru.job4j.tracker.model.Item;
 import ru.job4j.tracker.StartUI;
 import ru.job4j.tracker.input.StabInput;
+import ru.job4j.tracker.proxy.ConnectionRollback;
 import ru.job4j.tracker.storage.TrackerSQL;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 import java.util.function.Consumer;
 
 public class StartUITest {
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
     private TrackerSQL tracker;
 
+    public Connection init() {
+        try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties")) {
+            Properties config = new Properties();
+            config.load(in);
+            Class.forName(config.getProperty("driver-class-name"));
+            return DriverManager.getConnection(
+                    config.getProperty("url"),
+                    config.getProperty("username"),
+                    config.getProperty("password")
+
+
+            );
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
     @Before
     public void setUp() throws Exception {
-        tracker = new TrackerSQL();
-        tracker.init();
+        tracker = new TrackerSQL(ConnectionRollback.create(init()));
     }
 
     private final Consumer<String> output = new Consumer<String>() {
         private final PrintStream stdout = new PrintStream(out);
+
         @Override
         public void accept(String s) {
             stdout.println(s);
@@ -37,21 +59,17 @@ public class StartUITest {
             return out.toString();
         }
     };
-
-    private static final String  MENU =
-              "0. Добавить новую заявку\n"
-            + "1. Показать все заявки\n"
-            + "2. Найти заявку по ID\n"
-            + "3. Найти заявку по её имени\n"
-            + "4. Обновить заявку по её ID\n"
-            + "5. Удалить заявку по ее ID\n"
-            + "6. Выход из программы";
-
-
+    private static final String MENU =
+            "0. Добавить новую заявку\n"
+                    + "1. Показать все заявки\n"
+                    + "2. Найти заявку по ID\n"
+                    + "3. Найти заявку по её имени\n"
+                    + "4. Обновить заявку по её ID\n"
+                    + "5. Удалить заявку по ее ID\n"
+                    + "6. Выход из программы";
 
     @Test
     public void whenAddItem() throws SQLException {
-        tracker.deleteAllData();
         List<String> input = Arrays.asList("0", "UniqueNAme", "Описание", "6");
         new StartUI(new StabInput(input), tracker, output).init();
         assertThat(tracker.findByName("UniqueNAme").iterator().next().getName(), is("UniqueNAme"));
@@ -67,9 +85,8 @@ public class StartUITest {
 
     @Test
     public void whenFindItemByName() throws SQLException {
-        tracker.deleteAllData();
         List<String> search = Arrays.asList("0", "Имя", "Описание1", "0", "Имя", "Описание2", "0", "Одна другая", "Описание3",
-                           "0", "Имя", "Описание4", "3", "Имя", "6");
+                "0", "Имя", "Описание4", "3", "Имя", "6");
         new StartUI(new StabInput(search), tracker, output).init();
         assertThat(tracker.findByName("Имя").size(), is(3));
     }
@@ -94,9 +111,8 @@ public class StartUITest {
 
     @Test
     public void testOutPutAllItems() throws SQLException {
-        tracker.deleteAllData();
         Item third = new Item("Третья", "Проверочная2", 123434L);
-        Item first  = new Item("Первая", "Проверочная1", 1234L);
+        Item first = new Item("Первая", "Проверочная1", 1234L);
         String thirdId = tracker.add(third);
         String firstId = tracker.add(first);
         List<String> search = Arrays.asList("1", "6");
@@ -126,7 +142,7 @@ public class StartUITest {
     @Test
     public void testOutPutFindById() throws SQLException {
         Item third = new Item("Третья", "Проверочная2", 123434L);
-        Item first  = new Item("Первая", "Проверочная1", 1234L);
+        Item first = new Item("Первая", "Проверочная1", 1234L);
         tracker.add(third);
         String firstId = tracker.add(first);
         List<String> search = Arrays.asList("2", firstId, "6");
@@ -150,10 +166,9 @@ public class StartUITest {
 
     @Test
     public void testOutPutFindByName() throws SQLException {
-        tracker.deleteAllData();
         Item first = new Item("Первая", "first", 123434L);
-        Item second  = new Item("Первая", "second", 1234L);
-        Item third  = new Item("Левая", "third", 1234L);
+        Item second = new Item("Первая", "second", 1234L);
+        Item third = new Item("Левая", "third", 1234L);
         String firstId = tracker.add(first);
         String secondId = tracker.add(second);
         tracker.add(third);
@@ -184,7 +199,6 @@ public class StartUITest {
 
     @Test
     public void testOutPutUpdateItem() throws SQLException {
-        tracker.deleteAllData();
         Item first = new Item("Первая", "Описание", 123434L);
         String id = tracker.add(first);
         List<String> search = Arrays.asList("4", id, "Updating", "Second", "6");
@@ -209,7 +223,6 @@ public class StartUITest {
 
     @Test
     public void testOutPutDeleteItem() throws SQLException {
-        tracker.deleteAllData();
         Item first = new Item("Первая", "Описание", 123434L);
         String id = tracker.add(first);
         List<String> search = Arrays.asList("5", id, "6");
@@ -229,7 +242,6 @@ public class StartUITest {
 
     @Test
     public void testOutPutAddItem() throws SQLException {
-        tracker.deleteAllData();
         List<String> search = Arrays.asList("0", "Add Item", "This`s a new item!", "6");
         new StartUI(new StabInput(search), tracker, output).init();
         assertThat(

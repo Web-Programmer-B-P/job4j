@@ -17,6 +17,15 @@ import java.util.Properties;
  */
 public class TrackerSQL implements ITracker, AutoCloseable {
     private Connection connection;
+
+    public TrackerSQL() {
+
+    }
+
+    public TrackerSQL(Connection conn) {
+        connection = conn;
+    }
+
     private static final String CREATE_TABLE = "CREATE TABLE item ("
             + "id serial PRIMARY KEY,"
             + "name varchar(200),"
@@ -146,12 +155,6 @@ public class TrackerSQL implements ITracker, AutoCloseable {
             }
         }
         return result;
-    }
-
-    public void deleteAllData() throws SQLException {
-        try (Statement stm = connection.createStatement();) {
-            stm.execute("DELETE FROM item");
-        }
     }
 
     @Override
