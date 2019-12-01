@@ -13,9 +13,9 @@ import java.util.ArrayList;
  * @since 30.11.2019, 16:13
  */
 public class Menu {
-    private ArrayList<CommonOperation> listOfOperations = new ArrayList<>();
+    protected ArrayList<CommonOperation> listOfOperations = new ArrayList<>();
     private final CommonInputData inputData;
-    private int indexOfOperation;
+    protected int indexOfOperation;
 
     public Menu(CommonInputData commonInputData) {
         inputData = commonInputData;

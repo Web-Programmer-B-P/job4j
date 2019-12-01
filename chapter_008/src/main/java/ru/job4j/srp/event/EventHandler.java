@@ -10,19 +10,19 @@ import java.util.ArrayList;
  * @since 30.11.2019, 19:14
  */
 public class EventHandler {
-    private final CommonInputData commonInputData;
-    private final double prev;
+    protected final CommonInputData commonInputData;
+    protected final double prev;
 
     public EventHandler(final CommonInputData inputData, final double prevResult) {
         commonInputData = inputData;
         prev = prevResult;
     }
 
-    public ArrayList<Double> commonHandler() {
+    public ArrayList<Double> commonHandler(int countOfOperatorsForOperation) {
         double number = -1;
         String ask = null;
         ArrayList<Double> res = new ArrayList<>();
-        for (int index = 0; index < 2; index++) {
+        for (int index = 0; index < countOfOperatorsForOperation; index++) {
             if (prev != -1) {
                 ask = commonInputData.getAnwser("Вы хотите использовать предыдущий результат д/н?");
                 if (ask.equals("д")) {
