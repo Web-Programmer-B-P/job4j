@@ -21,7 +21,7 @@ public class Multiply extends BasicFunctionality {
     @Override
     public double doOperation(EventHandler handle) {
         System.out.println(nameOperation);
-        List<Double> number = handle.commonHandler();
+        List<Double> number = handle.commonHandler(2);
         return number.get(0) * number.get(1);
     }
 }
