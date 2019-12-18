@@ -4,12 +4,6 @@ language: java
 jdk:
   - oraclejdk12
 
-services:
-      - postgresql
-
-before_install:
-      - psql -c 'create database tracker;' -U postgres
-
 # используем режим обычного пользователя для сборки проекта.
 sudo: false
 
@@ -18,6 +12,7 @@ services:
 
 before_install:
   - psql -c 'create database parser;' -U postgres
+  - psql -c 'create database tracker;' -U postgres
 
 # после выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
 # Здесь используется сторонни сервис https://codecov.io/
