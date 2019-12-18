@@ -21,7 +21,7 @@ public class StoreXMLTest {
     public void whenGetDataFromDbAndGenerateXml() throws JAXBException, IOException {
         StoreSQL generate = new StoreSQL(new Config());
         generate.init();
-        generate.generate(2);
+        generate.generate(5);
         Path resourceDirectory = Paths.get("src", "test", "resources");
         String absolutePath = resourceDirectory.toFile().getAbsolutePath();
         StoreXML store = new StoreXML(new File(absolutePath + "/test.xml"));
@@ -32,8 +32,9 @@ public class StoreXMLTest {
         while ((data = reader.readLine()) != null) {
             result += data;
         }
-        String expected = "<?xmlversion=\"1.0\"encoding=\"UTF-8\"standalone=\"yes\"?>"
-                + "<entries><entry><field>1</field></entry><entry><field>2</field></entry></entries>";
+        String expected = "<?xmlversion=\"1.0\"encoding=\"UTF-8\"standalone=\"yes\"?><entries>"
+                + "<entry><field>1</field></entry><entry><field>2</field></entry><entry><field>3</field>"
+                + "</entry><entry><field>4</field></entry><entry><field>5</field></entry></entries>";
         assertThat(
                 result.replaceAll("\\s+", ""),
                 is(expected)

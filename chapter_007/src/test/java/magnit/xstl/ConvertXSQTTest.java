@@ -28,7 +28,7 @@ public class ConvertXSQTTest {
     public void setUp() throws Exception {
         StoreSQL generate = new StoreSQL(new Config());
         generate.init();
-        generate.generate(2);
+        generate.generate(5);
         Path resourceDirectory = Paths.get("src", "test", "resources");
         absolutePath = resourceDirectory.toFile().getAbsolutePath();
         StoreXML store = new StoreXML(new File(absolutePath + "/test.xml"));
@@ -42,7 +42,8 @@ public class ConvertXSQTTest {
     public void whenConvertXmlFileByXstlSchemeToNewXmlFile() throws IOException, TransformerException, InterruptedException {
         ConvertXSQT call = new ConvertXSQT();
         call.convert(source, dest, scheme);
-        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><entries><entry href=\"1\"/><entry href=\"2\"/></entries>";
+        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><entries>"
+                + "<entry href=\"1\"/><entry href=\"2\"/><entry href=\"3\"/><entry href=\"4\"/><entry href=\"5\"/></entries>";
         BufferedReader reader = new BufferedReader(new FileReader(absolutePath + "/test_convert_xsqt.xml"));
         String data = null;
         String result = "";

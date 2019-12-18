@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Configuration status="WARN">
+    <Properties>
+        <Property name="basePath">/home/proger/projects/job4j/chapter_007/src/main/resources</Property>
+    </Properties>
     <Appenders>
         <RollingFile name="file" fileName="${basePath}/chapter7-info.log"
                      filePattern="${basePath}/app-info-%d{yyyy-MM-dd}.log">
