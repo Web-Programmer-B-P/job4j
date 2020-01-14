@@ -16,9 +16,13 @@ public class SimpleBlockingQueue<T> {
     @GuardedBy("this")
     private Queue<T> queue = new LinkedList<>();
 
-    public synchronized void put(T value) throws InterruptedException {
+    public synchronized void put(T value) {
         while (!(queue.size() == 0)) {
-            this.wait();
+            try {
+                this.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         queue.offer(value);
         this.notify();
@@ -31,5 +35,9 @@ public class SimpleBlockingQueue<T> {
         T res = queue.poll();
         this.notify();
         return res;
+    }
+
+    public synchronized boolean isEmpty() {
+        return queue.isEmpty();
     }
 }
