@@ -20,7 +20,7 @@ public class Consumer<T> implements Runnable {
     public void run() {
         try {
             while (buffer.getBufferSize() > 0) {
-                list.add((T)buffer.get());
+                list.add((T) buffer.get());
             }
         } catch (InterruptedException ie) {
             ie.printStackTrace();
