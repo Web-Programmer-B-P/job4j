@@ -43,4 +43,32 @@
         <servlet-name>UserCreateServlet</servlet-name>
         <url-pattern>/create</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ListJsp</servlet-name>
+        <jsp-file>/index/list.jsp</jsp-file>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ListJsp</servlet-name>
+        <url-pattern>/list-all</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UpdateJsp</servlet-name>
+        <jsp-file>/update/update.jsp</jsp-file>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateJsp</servlet-name>
+        <url-pattern>/update-user</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CreateJsp</servlet-name>
+        <jsp-file>/create/create.jsp</jsp-file>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateJsp</servlet-name>
+        <url-pattern>/create-user</url-pattern>
+    </servlet-mapping>
 </web-app>

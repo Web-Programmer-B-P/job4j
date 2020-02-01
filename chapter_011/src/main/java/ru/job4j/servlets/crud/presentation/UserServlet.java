@@ -8,50 +8,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Date;
+import java.util.List;
 
 public class UserServlet extends HttpServlet {
     private final Validate logic = ValidateService.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        PrintWriter view = resp.getWriter();
-        view.append("<html>")
-                .append("<table border='1' width='100%' cellpadding='5'>")
-                .append("<tr>")
-                .append("<td>Id:</td>")
-                .append("<td>Name:</td>")
-                .append("<td>Login:</td>")
-                .append("<td>Email:</td>")
-                .append("<td>Create date:</td>")
-                .append("<td>Edit</td>")
-                .append("<td>Delete</td>")
-                .append("</tr>");
-        for (User el : logic.findAll()) {
-            int id = el.getId();
-            view.append("<tr>")
-                    .append("<td>").append(String.valueOf(id)).append("</td>")
-                    .append("<td>").append(el.getName()).append("</td>")
-                    .append("<td>").append(el.getLogin()).append("</td>")
-                    .append("<td>").append(el.getEmail()).append("</td>")
-                    .append("<td>").append(String.valueOf(getDate(el.getCreateDate()))).append("</td>")
-                    .append("<form action=").append(req.getContextPath()).append("/edit method='GET'>")
-                    .append("<input type='hidden' name='id' value='").append(String.valueOf(el.getId())).append("'>")
-                    .append("<td><input type='submit' value='Edit' class='submit'></td>")
-                    .append("</form>")
-                    .append("<form action=").append(req.getContextPath()).append("/list method='POST'>")
-                    .append("<input type='hidden' name='action' value='delete'>")
-                    .append("<input type='hidden' name='id' value='").append(String.valueOf(el.getId())).append("'>")
-                    .append("<td><input type='submit' value='Delete' class='submit'></td>")
-                    .append("</form>")
-                    .append("</tr>");
-        }
-        view.append("</table>")
-                .append("<h3 style='text-align:center;'><a href='")
-                .append(req.getContextPath())
-                .append("/create' style='text-decoration:none; color:orange'>Create user</a></h3>")
-                .append("</html>");
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        List<User> list = logic.findAll();
+        req.setAttribute("userList", list);
+        req.getRequestDispatcher(req.getContextPath() + "/list-all").forward(req, resp);
     }
 
     @Override
@@ -98,9 +64,5 @@ public class UserServlet extends HttpServlet {
         }
         user.setCreateDate(System.currentTimeMillis());
         return user;
-    }
-
-    private Date getDate(long time) {
-        return new Date(time);
     }
 }
