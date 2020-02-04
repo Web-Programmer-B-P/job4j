@@ -22,12 +22,6 @@ public class MemoryStore implements Store {
     }
 
     @Override
-    public int getNewId() {
-        id.increment();
-        return id.getValue().intValue();
-    }
-
-    @Override
     public void add(User user) {
         storage.put(user.getId(), user);
     }

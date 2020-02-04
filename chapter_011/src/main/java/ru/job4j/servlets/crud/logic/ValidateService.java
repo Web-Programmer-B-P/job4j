@@ -1,13 +1,13 @@
 package ru.job4j.servlets.crud.logic;
 
+import ru.job4j.servlets.crud.db.DbStore;
 import ru.job4j.servlets.crud.model.User;
-import ru.job4j.servlets.crud.persistent.MemoryStore;
 import ru.job4j.servlets.crud.persistent.Store;
 import java.util.List;
 
 public class ValidateService implements Validate {
     private static final ValidateService INSTANCE = new ValidateService();
-    private final Store logic = MemoryStore.getInstance();
+    private final Store logic = DbStore.getInstance();
 
     private ValidateService() {
 
@@ -22,7 +22,6 @@ public class ValidateService implements Validate {
         if (findById(user.getId()) == null) {
             logic.add(user);
         }
-
     }
 
     @Override
@@ -43,10 +42,5 @@ public class ValidateService implements Validate {
     @Override
     public User findById(int id) {
         return logic.findById(id);
-    }
-
-    @Override
-    public int getNewId() {
-        return logic.getNewId();
     }
 }

@@ -20,7 +20,7 @@ public class UserUpdateServlet extends HttpServlet {
             User editUser = logic.findById(Integer.parseInt(idParam));
             req.setAttribute("editUser", editUser);
             req.getRequestDispatcher(req.getContextPath() + "/update-user").forward(req, resp);
-        }else {
+        } else {
             req.getRequestDispatcher(req.getContextPath() + "/list").forward(req, resp);
         }
     }

@@ -9,5 +9,4 @@ public interface Validate {
     void delete(int id);
     List<User> findAll();
     User findById(int id);
-    int getNewId();
 }

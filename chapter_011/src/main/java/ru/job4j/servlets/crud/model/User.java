@@ -3,17 +3,17 @@ package ru.job4j.servlets.crud.model;
 import java.util.Objects;
 
 public class User {
-    private final int id;
+    private int id;
     private String name;
     private String login;
     private String email;
     private long createDate;
 
-    public User(final int id) {
-        this.id = id;
+    public User() {
+
     }
 
-    public User(final int id, String name, String login, String email, long createDate) {
+    public User(int id, String name, String login, String email, long createDate) {
         this.id = id;
         this.name = name;
         this.login = login;
@@ -23,6 +23,10 @@ public class User {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

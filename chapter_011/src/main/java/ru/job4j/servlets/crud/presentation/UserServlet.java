@@ -26,7 +26,7 @@ public class UserServlet extends HttpServlet {
         String idParam = req.getParameter("id");
         int id = 0;
         if (action.equals("add")) {
-            User user = new User(logic.getNewId());
+            User user = new User();
             logic.add(fill(user, req));
             resp.sendRedirect(req.getContextPath() + "/list");
         }
