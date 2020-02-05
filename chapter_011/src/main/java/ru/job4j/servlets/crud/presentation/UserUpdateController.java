@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class UserUpdateServlet extends HttpServlet {
+public class UserUpdateController extends HttpServlet {
     private final Validate logic = ValidateService.getInstance();
 
     @Override
@@ -18,8 +18,8 @@ public class UserUpdateServlet extends HttpServlet {
         String action = req.getParameter("action");
         if (idParam != null && action.equals("update")) {
             User editUser = logic.findById(Integer.parseInt(idParam));
-            req.setAttribute("editUser", editUser);
-            req.getRequestDispatcher(req.getContextPath() + "/update-user").forward(req, resp);
+            req.setAttribute("user", editUser);
+            req.getRequestDispatcher(req.getContextPath() + "WEB-INF/views/update/update.jsp").forward(req, resp);
         } else {
             req.getRequestDispatcher(req.getContextPath() + "/list").forward(req, resp);
         }

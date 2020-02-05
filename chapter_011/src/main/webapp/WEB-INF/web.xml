@@ -16,7 +16,7 @@
 
     <servlet>
         <servlet-name>UserServlet</servlet-name>
-        <servlet-class>ru.job4j.servlets.crud.presentation.UserServlet</servlet-class>
+        <servlet-class>ru.job4j.servlets.crud.presentation.UserMainController</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -26,7 +26,7 @@
 
     <servlet>
         <servlet-name>UserUpdateServlet</servlet-name>
-        <servlet-class>ru.job4j.servlets.crud.presentation.UserUpdateServlet</servlet-class>
+        <servlet-class>ru.job4j.servlets.crud.presentation.UserUpdateController</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -36,39 +36,11 @@
 
     <servlet>
         <servlet-name>UserCreateServlet</servlet-name>
-        <servlet-class>ru.job4j.servlets.crud.presentation.UserCreateServlet</servlet-class>
+        <servlet-class>ru.job4j.servlets.crud.presentation.UserCreateController</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserCreateServlet</servlet-name>
         <url-pattern>/create</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>ListJsp</servlet-name>
-        <jsp-file>/index/list.jsp</jsp-file>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ListJsp</servlet-name>
-        <url-pattern>/list-all</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>UpdateJsp</servlet-name>
-        <jsp-file>/update/update.jsp</jsp-file>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UpdateJsp</servlet-name>
-        <url-pattern>/update-user</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>CreateJsp</servlet-name>
-        <jsp-file>/create/create.jsp</jsp-file>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CreateJsp</servlet-name>
-        <url-pattern>/create-user</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--
   Created by IntelliJ IDEA.
   User: proger
@@ -5,7 +7,6 @@
   Time: 8:22
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Создание пользователя</title>
@@ -13,7 +14,7 @@
 <body>
 <div style='text-align:center;'>
     <h1>Страница создания пользователя</h1>
-    <form action="<%=request.getContextPath()%>/list" method="post">
+    <form action="${pageContext.request.contextPath}/list" method="post">
         <p>
             <strong>Имя: </strong>
             <input name='name' placeholder='Имя'>
