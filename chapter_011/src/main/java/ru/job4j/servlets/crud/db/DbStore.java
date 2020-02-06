@@ -34,7 +34,7 @@ public class DbStore implements Store {
     public void add(User user) {
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement preparedStatement =
-                     connection.prepareStatement("INSERT INTO " + TABLE_NAME + " (name, login, email, date) values (?, ?, ?, ?)")) {
+                     connection.prepareStatement("INSERT INTO " + TABLE_NAME + " (name, login, email, date, image) values (?, ?, ?, ?, ?)")) {
             setCommonStatement(user, preparedStatement);
             preparedStatement.executeUpdate();
         } catch (Exception e) {
@@ -46,10 +46,10 @@ public class DbStore implements Store {
     public void update(User user) {
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement preparedStatement =
-                     connection.prepareStatement("UPDATE " + TABLE_NAME + " SET name=?, login=?, email=?, date=? WHERE "
+                     connection.prepareStatement("UPDATE " + TABLE_NAME + " SET name=?, login=?, email=?, date=?, image=? WHERE "
                              + PARAMETRIZED_QUERY_WITH_PRIMARY_KEY)) {
             setCommonStatement(user, preparedStatement);
-            preparedStatement.setInt(5, user.getId());
+            preparedStatement.setInt(6, user.getId());
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             LOG.error(e);
@@ -107,7 +107,8 @@ public class DbStore implements Store {
         String login = resultSet.getString(3);
         String email = resultSet.getString(4);
         long date = resultSet.getDate(5).getTime();
-        return new User(user_id, name, login, email, date);
+        String image = resultSet.getString(6);
+        return new User(user_id, name, login, email, image, date);
     }
 
     private void setCommonStatement(User user, PreparedStatement preparedStatement) throws SQLException {
@@ -115,5 +116,6 @@ public class DbStore implements Store {
         preparedStatement.setString(2, user.getLogin());
         preparedStatement.setString(3, user.getEmail());
         preparedStatement.setDate(4, new Date(System.currentTimeMillis()));
+        preparedStatement.setString(5, user.getPhotoId());
     }
 }

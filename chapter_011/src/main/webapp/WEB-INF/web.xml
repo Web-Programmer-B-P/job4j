@@ -15,32 +15,41 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>UserServlet</servlet-name>
+        <servlet-name>UserMainController</servlet-name>
         <servlet-class>ru.job4j.servlets.crud.presentation.UserMainController</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>UserServlet</servlet-name>
+        <servlet-name>UserMainController</servlet-name>
         <url-pattern>/list</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>UserUpdateServlet</servlet-name>
+        <servlet-name>UserUpdateController</servlet-name>
         <servlet-class>ru.job4j.servlets.crud.presentation.UserUpdateController</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>UserUpdateServlet</servlet-name>
+        <servlet-name>UserUpdateController</servlet-name>
         <url-pattern>/edit</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>UserCreateServlet</servlet-name>
+        <servlet-name>UserCreateController</servlet-name>
         <servlet-class>ru.job4j.servlets.crud.presentation.UserCreateController</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>UserCreateServlet</servlet-name>
+        <servlet-name>UserCreateController</servlet-name>
         <url-pattern>/create</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UserDownloadController</servlet-name>
+        <servlet-class>ru.job4j.servlets.crud.presentation.UserDownloadController</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserDownloadController</servlet-name>
+        <url-pattern>/download</url-pattern>
     </servlet-mapping>
 </web-app>

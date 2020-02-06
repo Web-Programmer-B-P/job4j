@@ -9,6 +9,7 @@
 --%>
 <html>
 <head>
+    <meta charset="utf-8">
     <title>Создание пользователя</title>
 </head>
 <body>
@@ -27,11 +28,24 @@
             <strong>Почта: </strong>
             <input name='email' placeholder='Почта'>
         </p>
+        <p>
+            <strong>Имя файла: </strong>
+            <input name='image' placeholder='Это поле заполняется автоматически' value="${image}">
+        </p>
         <input type='hidden' name='action' value='add'>
         <td>
-            <input type='submit' value='Создать' class='submit'>
+            <input type='submit' value='Создать пользователя' class='submit'>
         </td>
     </form>
 </div>
+<div style="text-align: center;">
+    <form action="${pageContext.request.contextPath}/create" method="post" enctype="multipart/form-data">
+        <div class="checkbox">
+            <input type="file" name="file">
+        </div>
+        <button type="submit" class="btn btn-default">Закрепить файл за пользователем</button>
+    </form>
+</div>
+
 </body>
 </html>

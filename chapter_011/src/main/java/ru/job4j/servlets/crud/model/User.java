@@ -7,17 +7,19 @@ public class User {
     private String name;
     private String login;
     private String email;
+    private String photoId;
     private long createDate;
 
     public User() {
 
     }
 
-    public User(int id, String name, String login, String email, long createDate) {
+    public User(int id, String name, String login, String email, String photoId, long createDate) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
+        this.photoId = photoId;
         this.createDate = createDate;
     }
 
@@ -51,6 +53,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhotoId() {
+        return photoId;
+    }
+
+    public void setPhotoId(String photoId) {
+        this.photoId = photoId;
     }
 
     public long getCreateDate() {
@@ -89,6 +99,7 @@ public class User {
                 + ", name='" + name + '\''
                 + ", login='" + login + '\''
                 + ", email='" + email + '\''
+                + ", photoId='" + photoId + '\''
                 + ", createDate=" + createDate
                 + '}';
     }

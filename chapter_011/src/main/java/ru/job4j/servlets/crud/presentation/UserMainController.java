@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class UserMainController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String action = req.getParameter("action");
         String idParam = req.getParameter("id");
         int id = 0;
@@ -41,6 +42,7 @@ public class UserMainController extends HttpServlet {
         }
 
         if (action.equals("delete")) {
+            deleteImageBeforeDeleteUser(req);
             if (idParam != null) {
                 id = Integer.parseInt(req.getParameter("id"));
                 logic.delete(id);
@@ -49,10 +51,18 @@ public class UserMainController extends HttpServlet {
         }
     }
 
+    private void deleteImageBeforeDeleteUser(HttpServletRequest req) {
+        File fileToTrash = new File(UserCreateController.PATH_TO_SAVE_IMAGES + req.getParameter("image"));
+        if (fileToTrash.exists()) {
+            fileToTrash.delete();
+        }
+    }
+
     private User fill(User user, HttpServletRequest req) {
         String name = req.getParameter("name");
         String login = req.getParameter("login");
         String email = req.getParameter("email");
+        String image = req.getParameter("image");
         if (name != null) {
             user.setName(name);
         }
@@ -61,6 +71,9 @@ public class UserMainController extends HttpServlet {
         }
         if (email != null) {
             user.setEmail(email);
+        }
+        if (image != null) {
+            user.setPhotoId(image);
         }
         user.setCreateDate(System.currentTimeMillis());
         return user;

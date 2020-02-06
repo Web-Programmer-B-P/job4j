@@ -11,6 +11,11 @@
 <html>
 <head>
     <title>Список пользователей</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <body>
 <table cellpadding="5" width="100%" border="1">
@@ -19,6 +24,8 @@
         <td>Имя:</td>
         <td>Логин:</td>
         <td>Почта:</td>
+        <td>Фото:</td>
+        <td>Скачать фото:</td>
         <td>Дата создания:</td>
         <td>Обновить</td>
         <td>Удалить</td>
@@ -39,6 +46,13 @@
                     ${user.email}
             </td>
             <td>
+                <img src="${pageContext.servletContext.contextPath}/download?name=${user.photoId}" width="100px"
+                     height="100px"/>
+            </td>
+            <td>
+                <a href="${pageContext.servletContext.contextPath}/download?name=${user.photoId}">Скачать</a>
+            </td>
+            <td>
                 <jsp:useBean id="dateValue" class="java.util.Date"/>
                 <jsp:setProperty name="dateValue" property="time" value="${user.createDate}"/>
                 <fmt:formatDate value="${dateValue}" pattern="dd-MM-yyyy"/>
@@ -53,6 +67,7 @@
             <form action="${pageContext.request.contextPath}/list" method="post">
                 <input type='hidden' name='action' value='delete'>
                 <input type='hidden' name='id' value='${user.id}'>
+                <input type='hidden' name='image' value='${user.photoId}'>
                 <td>
                     <input type='submit' value='Удалить' class='submit'>
                 </td>
