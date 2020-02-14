@@ -1,4 +1,4 @@
-package ru.job4j.servlets.crud.presentation;
+package ru.job4j.servlets.crud.presentation.user;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

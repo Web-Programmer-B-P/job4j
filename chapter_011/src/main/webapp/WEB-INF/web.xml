@@ -5,6 +5,42 @@
          http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
 
+    <filter>
+        <filter-name>FilterEncoding</filter-name>
+        <filter-class>ru.job4j.servlets.crud.presentation.filters.FilterEncoding</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterEncoding</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>ru.job4j.servlets.crud.presentation.filters.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>SingInController</servlet-name>
+        <servlet-class>ru.job4j.servlets.crud.presentation.autorisation.SingInController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SingInController</servlet-name>
+        <url-pattern>/sing-in</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SingOutController</servlet-name>
+        <servlet-class>ru.job4j.servlets.crud.presentation.autorisation.SingOutController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SingOutController</servlet-name>
+        <url-pattern>/sing-out</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>HelloWorld</servlet-name>
         <servlet-class>ru.job4j.servlets.hello.HelloWorld</servlet-class>
@@ -16,7 +52,7 @@
 
     <servlet>
         <servlet-name>UserMainController</servlet-name>
-        <servlet-class>ru.job4j.servlets.crud.presentation.UserMainController</servlet-class>
+        <servlet-class>ru.job4j.servlets.crud.presentation.user.UserMainController</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -26,7 +62,7 @@
 
     <servlet>
         <servlet-name>UserUpdateController</servlet-name>
-        <servlet-class>ru.job4j.servlets.crud.presentation.UserUpdateController</servlet-class>
+        <servlet-class>ru.job4j.servlets.crud.presentation.user.UserUpdateController</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -36,7 +72,7 @@
 
     <servlet>
         <servlet-name>UserCreateController</servlet-name>
-        <servlet-class>ru.job4j.servlets.crud.presentation.UserCreateController</servlet-class>
+        <servlet-class>ru.job4j.servlets.crud.presentation.user.UserCreateController</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -45,11 +81,59 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>UserDownloadController</servlet-name>
-        <servlet-class>ru.job4j.servlets.crud.presentation.UserDownloadController</servlet-class>
+        <servlet-class>ru.job4j.servlets.crud.presentation.user.UserDownloadController</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserDownloadController</servlet-name>
         <url-pattern>/download</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>RoleController</servlet-name>
+        <servlet-class>ru.job4j.servlets.crud.presentation.role.RoleMainController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RoleController</servlet-name>
+        <url-pattern>/role</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UpdateRoleController</servlet-name>
+        <servlet-class>ru.job4j.servlets.crud.presentation.role.UpdateRoleController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateRoleController</servlet-name>
+        <url-pattern>/edit_role</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>RoleCreateController</servlet-name>
+        <servlet-class>ru.job4j.servlets.crud.presentation.role.RoleCreateController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RoleCreateController</servlet-name>
+        <url-pattern>/create_role</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SingleUserController</servlet-name>
+        <servlet-class>ru.job4j.servlets.crud.presentation.user.SingleUserController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SingleUserController</servlet-name>
+        <url-pattern>/page_user</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SingleUpdateUserController</servlet-name>
+        <servlet-class>ru.job4j.servlets.crud.presentation.user.SingleUpdateUserController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SingleUpdateUserController</servlet-name>
+        <url-pattern>/update_user</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SingleUserUpdateFileController</servlet-name>
+        <servlet-class>ru.job4j.servlets.crud.presentation.user.SingleUserUpdateFileController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SingleUserUpdateFileController</servlet-name>
+        <url-pattern>/update_file_user</url-pattern>
     </servlet-mapping>
 </web-app>

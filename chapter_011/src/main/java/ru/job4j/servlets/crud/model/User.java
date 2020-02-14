@@ -8,19 +8,43 @@ public class User {
     private String login;
     private String email;
     private String photoId;
+    private String password;
     private long createDate;
+    private int roleId;
+    private String roleName;
 
     public User() {
 
     }
 
-    public User(int id, String name, String login, String email, String photoId, long createDate) {
+    public User(int id, String name, String login, String email, String photoId, long createDate, String password, int roleId) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
         this.photoId = photoId;
         this.createDate = createDate;
+        this.password = password;
+        this.roleId = roleId;
+    }
+
+    public User(int id, String name, String login, String email) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.email = email;
+    }
+
+    public User(int id, String name, String login, String email, String photoId, long createDate, String password, int roleId, String roleName) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.photoId = photoId;
+        this.createDate = createDate;
+        this.password = password;
+        this.roleId = roleId;
+        this.roleName = roleName;
     }
 
     public int getId() {
@@ -69,6 +93,30 @@ public class User {
 
     public void setCreateDate(long createDate) {
         this.createDate = createDate;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     @Override

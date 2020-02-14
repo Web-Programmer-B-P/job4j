@@ -1,9 +1,14 @@
-package ru.job4j.servlets.crud.presentation;
+package ru.job4j.servlets.crud.presentation.user;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ru.job4j.servlets.crud.logic.role.ValidateRole;
+import ru.job4j.servlets.crud.model.Role;
+import ru.job4j.servlets.crud.persistent.db.DbUserStore;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,18 +17,27 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 public class UserCreateController extends HttpServlet {
+    private final ValidateRole logic = ValidateRole.getInstance();
+    private static final Logger LOG = LogManager.getLogger(DbUserStore.class.getName());
     private static final int INDEX_OF_FIRST_ELEMENT_FROM_REQUEST = 0;
     protected static final String PATH_TO_SAVE_IMAGES = "/home/proger/bin/images/";
+    private static final String ATTRIBUTE_FILE_NAME = "fileName";
+    private static final String MESSAGE_LOG = "Смотри в метод загрузки файла";
+    private static final String PATH_TO_JSP_CREATE = "WEB-INF/views/user/create.jsp";
+    private static final String IMAGE_ATTRIBUTE = "image";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        File privateUserFile = new File(PATH_TO_SAVE_IMAGES + File.separator + req.getAttribute("fileName"));
+        File privateUserFile = new File(PATH_TO_SAVE_IMAGES + File.separator + req.getAttribute(ATTRIBUTE_FILE_NAME));
         if (privateUserFile.exists()) {
-            req.setAttribute("image", privateUserFile.getName());
+            req.setAttribute(IMAGE_ATTRIBUTE, privateUserFile.getName());
         }
-        req.getRequestDispatcher("WEB-INF/views/create/create.jsp").forward(req, resp);
+        List<Role> list = logic.findAllRoles();
+        req.setAttribute("roles", list);
+        req.getRequestDispatcher(PATH_TO_JSP_CREATE).forward(req, resp);
     }
 
     @Override
@@ -39,14 +53,14 @@ public class UserCreateController extends HttpServlet {
                 targetFolderToSave.mkdir();
             }
             if (!item.isFormField()) {
-                req.setAttribute("fileName", item.getName());
+                req.setAttribute(ATTRIBUTE_FILE_NAME, item.getName());
                 File file = new File(targetFolderToSave + File.separator + item.getName());
                 try (FileOutputStream out = new FileOutputStream(file)) {
                     out.write(item.getInputStream().readAllBytes());
                 }
             }
         } catch (FileUploadException e) {
-            e.printStackTrace();
+            LOG.error(MESSAGE_LOG, e);
         }
         doGet(req, resp);
     }
