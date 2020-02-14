@@ -9,7 +9,6 @@
 --%>
 <html>
 <head>
-    <meta charset="utf-8">
     <title>Создание пользователя</title>
 </head>
 <body>
@@ -27,6 +26,21 @@
         <p>
             <strong>Почта: </strong>
             <input name='email' placeholder='Почта'>
+        </p>
+        <p>
+            <strong>Пароль: </strong>
+            <input name='password' type="password" placeholder='Пароль'>
+        </p>
+        <p>
+            <strong>Роль: </strong>
+            <select name='role'>
+                <option value="" hidden="" selected>Выберите роль</option>
+                <c:forEach items="${roles}" var="role">
+                    <c:if test="${role.role != selected}">
+                        <option value="${role.id}">${role.role}</option>
+                    </c:if>
+                </c:forEach>
+            </select>
         </p>
         <p>
             <strong>Имя файла: </strong>

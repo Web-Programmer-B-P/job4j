@@ -1,7 +1,7 @@
-package ru.job4j.servlets.crud.presentation;
+package ru.job4j.servlets.crud.presentation.user;
 
-import ru.job4j.servlets.crud.logic.Validate;
-import ru.job4j.servlets.crud.logic.ValidateService;
+import ru.job4j.servlets.crud.logic.user.Validate;
+import ru.job4j.servlets.crud.logic.user.ValidateUserService;
 import ru.job4j.servlets.crud.model.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,41 +12,45 @@ import java.io.IOException;
 import java.util.List;
 
 public class UserMainController extends HttpServlet {
-    private final Validate logic = ValidateService.getInstance();
+    private static final String LIST_URI = "/list";
+    private static final String PATH_TO_LIST_JSP = "WEB-INF/views/user/list.jsp";
+    private static final String ID_PARAMETER = "id";
+    private final Validate logic = ValidateUserService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         List<User> list = logic.findAll();
         req.setAttribute("userList", list);
-        req.getRequestDispatcher("WEB-INF/views/index/list.jsp").forward(req, resp);
+        req.getRequestDispatcher(String.format("%s%s", req.getContextPath(), PATH_TO_LIST_JSP)).forward(req, resp);
+
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String action = req.getParameter("action");
-        String idParam = req.getParameter("id");
+        String idParam = req.getParameter(ID_PARAMETER);
         int id = 0;
         if (action.equals("add")) {
             User user = new User();
             logic.add(fill(user, req));
-            resp.sendRedirect(req.getContextPath() + "/list");
+            resp.sendRedirect(String.format("%s%s", req.getContextPath(), LIST_URI));
         }
 
         if (action.equals("update")) {
             if (idParam != null) {
-                id = Integer.parseInt(req.getParameter("id"));
+                id = Integer.parseInt(req.getParameter(ID_PARAMETER));
                 User userUpdate = logic.findById(id);
                 logic.update(fill(userUpdate, req));
-                resp.sendRedirect(req.getContextPath() + "/list");
+                resp.sendRedirect(String.format("%s%s", req.getContextPath(), LIST_URI));
             }
         }
 
         if (action.equals("delete")) {
             deleteImageBeforeDeleteUser(req);
             if (idParam != null) {
-                id = Integer.parseInt(req.getParameter("id"));
+                id = Integer.parseInt(req.getParameter(ID_PARAMETER));
                 logic.delete(id);
-                resp.sendRedirect(req.getContextPath() + "/list");
+                resp.sendRedirect(String.format("%s%s", req.getContextPath(), LIST_URI));
             }
         }
     }
@@ -63,6 +67,8 @@ public class UserMainController extends HttpServlet {
         String login = req.getParameter("login");
         String email = req.getParameter("email");
         String image = req.getParameter("image");
+        String password = req.getParameter("password");
+        String role = req.getParameter("role");
         if (name != null) {
             user.setName(name);
         }
@@ -74,6 +80,12 @@ public class UserMainController extends HttpServlet {
         }
         if (image != null) {
             user.setPhotoId(image);
+        }
+        if (password != null) {
+            user.setPassword(password);
+        }
+        if (role != null) {
+            user.setRoleId(Integer.parseInt(role));
         }
         user.setCreateDate(System.currentTimeMillis());
         return user;
