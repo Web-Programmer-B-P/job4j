@@ -15,7 +15,7 @@ public class UserMainController extends HttpServlet {
     private static final String LIST_URI = "/list";
     private static final String PATH_TO_LIST_JSP = "WEB-INF/views/user/list.jsp";
     private static final String ID_PARAMETER = "id";
-    private final Validate logic = ValidateUserService.getInstance();
+    private static final Validate logic = ValidateUserService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

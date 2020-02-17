@@ -142,13 +142,14 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{"
-                + "id=" + id
+        return "User{" + "id=" + id
                 + ", name='" + name + '\''
                 + ", login='" + login + '\''
                 + ", email='" + email + '\''
                 + ", photoId='" + photoId + '\''
+                + ", password='" + password + '\''
                 + ", createDate=" + createDate
-                + '}';
+                + ", roleId=" + roleId
+                + ", roleName='" + roleName + '\'' + '}';
     }
 }
