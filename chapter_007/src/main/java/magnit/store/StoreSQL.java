@@ -28,22 +28,22 @@ public class StoreSQL implements AutoCloseable {
 
     public boolean init() {
         config.init();
-        File findFileDb = new File(config.get("path") + "magnit.db");
+        File findFileDb = new File(StoreSQL.class.getResource("/") + config.get("dbName"));
         if (!findFileDb.exists()) {
             try {
-                connect = DriverManager.getConnection(config.get("url"));
+                connect = DriverManager.getConnection(config.get("driver") + config.get("dbName"));
                 if (connect != null) {
                     DatabaseMetaData meta = connect.getMetaData();
                     LOG.info("The driver name is " + meta.getDriverName());
                     LOG.info("A new database has been created.");
                 }
-
             } catch (SQLException e) {
                 LOG.trace(e.getMessage());
             }
         } else {
             try {
-                connect = DriverManager.getConnection(config.get("url"));
+                connect = DriverManager.getConnection(
+                        config.get("driver") + StoreSQL.class.getResource("/") + config.get("dbName"));
                 LOG.info("Your connection to database is successfull!");
             } catch (SQLException e) {
                 LOG.trace(e.getMessage());

@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
@@ -25,14 +26,15 @@ import static org.junit.Assert.*;
  */
 public class XMLParseTest {
     private String absolutePath;
+
     @Before
     public void setUp() throws Exception {
         StoreSQL generate = new StoreSQL(new Config());
         generate.init();
         generate.generate(5);
-        Path resourceDirectory = Paths.get("src", "test", "resources");
+        Path resourceDirectory = Paths.get("src", "main", "resources");
         absolutePath = resourceDirectory.toFile().getAbsolutePath();
-        StoreXML store = new StoreXML(new File(absolutePath + "/test.xml"));
+        StoreXML store = new StoreXML(new File(this.getClass().getClassLoader().getResource("test.xml").getPath()));
         store.save(generate.load());
         File scheme = new File(this.getClass().getClassLoader().getResource("scheme.xml").getFile());
         File source = new File(this.getClass().getClassLoader().getResource("test.xml").getFile());
@@ -42,7 +44,7 @@ public class XMLParseTest {
     }
 
     @Test
-    public void whenParseXmlAndCout() throws ParserConfigurationException, SAXException, IOException {
+    public void whenParseXmlAndCount() throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
         XMLParse parse = new XMLParse();
