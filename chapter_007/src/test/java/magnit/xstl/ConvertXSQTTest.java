@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import javax.xml.transform.TransformerException;
 import java.io.*;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import static org.hamcrest.core.Is.*;
@@ -26,32 +27,30 @@ public class ConvertXSQTTest {
 
     @Before
     public void setUp() throws Exception {
-        StoreSQL generate = new StoreSQL(new Config());
-        generate.init();
-        generate.generate(5);
-        Path resourceDirectory = Paths.get("src", "test", "resources");
-        absolutePath = resourceDirectory.toFile().getAbsolutePath();
-        StoreXML store = new StoreXML(new File(absolutePath + "/test.xml"));
-        store.save(generate.load());
-        scheme = new File(this.getClass().getClassLoader().getResource("scheme.xml").getFile());
-        source = new File(this.getClass().getClassLoader().getResource("test.xml").getFile());
-        dest = new File(absolutePath + "/test_convert_xsqt.xml");
+            StoreSQL generate = new StoreSQL(new Config());
+            generate.init();
+            generate.generate(5);
+            Path resourceDirectory = Paths.get("src", "main", "resources");
+            absolutePath = resourceDirectory.toFile().getAbsolutePath();
+            StoreXML store = new StoreXML(new File(this.getClass().getClassLoader().getResource("test.xml").getFile()));
+            store.save(generate.load());
+            scheme = new File(this.getClass().getClassLoader().getResource("scheme.xml").getFile());
+            source = new File(this.getClass().getClassLoader().getResource("test.xml").getFile());
+            dest = new File(absolutePath + "/test_convert_xsqt.xml");
+            ConvertXSQT call = new ConvertXSQT();
+            call.convert(source, dest, scheme);
     }
 
     @Test
-    public void whenConvertXmlFileByXstlSchemeToNewXmlFile() throws IOException, TransformerException, InterruptedException {
-        ConvertXSQT call = new ConvertXSQT();
-        call.convert(source, dest, scheme);
-        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><entries>"
-                + "<entry href=\"1\"/><entry href=\"2\"/><entry href=\"3\"/><entry href=\"4\"/><entry href=\"5\"/></entries>";
+    public void whenConvertXmlFileByXstlSchemeToNewXmlFile() throws IOException, TransformerException, InterruptedException, URISyntaxException {
+        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><entries><entry href=\"1\"/>"
+                + "<entry href=\"2\"/><entry href=\"3\"/><entry href=\"4\"/><entry href=\"5\"/></entries>";
         BufferedReader reader = new BufferedReader(new FileReader(absolutePath + "/test_convert_xsqt.xml"));
-        String data = null;
+        String data;
         String result = "";
         while ((data = reader.readLine()) != null) {
-            result += data;
+            result +=  data;
         }
-        assertThat(result.replaceAll("\\s+", " "),
-                is(expected)
-        );
+        assertThat(result, is(expected));
     }
 }
