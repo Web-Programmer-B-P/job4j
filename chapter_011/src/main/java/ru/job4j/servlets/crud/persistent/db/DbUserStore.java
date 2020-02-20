@@ -1,6 +1,5 @@
 package ru.job4j.servlets.crud.persistent.db;
 
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.job4j.servlets.crud.logic.user.Validate;
@@ -12,19 +11,12 @@ import java.util.List;
 public class DbUserStore implements Validate {
     private static final Logger LOG = LogManager.getLogger(DbUserStore.class.getName());
     private static final DbUserStore INSTANCE = new DbUserStore();
+    private final BaseCommonPool baseCommonPool = BaseCommonPool.getInstance();
     public static final String PARAMETRIZED_QUERY_WITH_PRIMARY_KEY = "user_id=?";
     public static final String TABLE_NAME = "users";
-    public static final String DB_NAME = "users";
-    private final BasicDataSource source = new BasicDataSource();
 
     private DbUserStore() {
-        source.setDriverClassName("org.postgresql.Driver");
-        source.setUrl("jdbc:postgresql://127.0.0.1:5432/" + DB_NAME);
-        source.setUsername("postgres");
-        source.setPassword("password");
-        source.setMinIdle(5);
-        source.setMaxIdle(10);
-        source.setMaxOpenPreparedStatements(100);
+
     }
 
     public static DbUserStore getInstance() {
@@ -33,7 +25,7 @@ public class DbUserStore implements Validate {
 
     @Override
     public void add(User user) {
-        try (Connection connection = source.getConnection();
+        try (Connection connection = baseCommonPool.getConnect();
              PreparedStatement preparedStatement =
                      connection.prepareStatement("INSERT INTO " + TABLE_NAME + " (name, login, email, image, password, role_id, date) values (?, ?, ?, ?, ?, ?, ?)")) {
             setCommonStatement(user, preparedStatement);
@@ -45,7 +37,7 @@ public class DbUserStore implements Validate {
 
     @Override
     public void update(User user) {
-        try (Connection connection = source.getConnection();
+        try (Connection connection = baseCommonPool.getConnect();
              PreparedStatement preparedStatement =
                      connection.prepareStatement("UPDATE " + TABLE_NAME + " SET name=?, login=?, email=?, image=?, password=?, role_id=?, date=? WHERE "
                              + PARAMETRIZED_QUERY_WITH_PRIMARY_KEY)) {
@@ -59,7 +51,7 @@ public class DbUserStore implements Validate {
 
     @Override
     public void delete(int id) {
-        try (Connection connection = source.getConnection();
+        try (Connection connection = baseCommonPool.getConnect();
              PreparedStatement preparedStatement =
                      connection.prepareStatement("DELETE FROM " + TABLE_NAME + " WHERE "
                              + PARAMETRIZED_QUERY_WITH_PRIMARY_KEY)) {
@@ -73,7 +65,7 @@ public class DbUserStore implements Validate {
     @Override
     public List<User> findAll() {
         List<User> listOfFoundUsers = new ArrayList<>();
-        try (Connection connection = source.getConnection();
+        try (Connection connection = baseCommonPool.getConnect();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT u.user_id, u.name, u.login, u.email, "
                      + "u.image, u.password, u.role_id, u.date, r.name FROM users AS u INNER JOIN role AS r ON u.role_id = r.role_id")) {
@@ -89,7 +81,7 @@ public class DbUserStore implements Validate {
     @Override
     public User findById(int id) {
         User foundUser = null;
-        try (Connection connection = source.getConnection();
+        try (Connection connection = baseCommonPool.getConnect();
              PreparedStatement prepare = connection.prepareStatement("SELECT u.user_id, u.name, u.login, u.email, "
                      + " u.image, u.password, u.role_id, u.date, r.name"
                      + " FROM users AS u INNER JOIN role AS r ON u.role_id = r.role_id WHERE "
@@ -108,7 +100,7 @@ public class DbUserStore implements Validate {
     @Override
     public boolean isUserExist(String requestLogin, String requestPassword) {
         boolean userExists = false;
-        try (Connection connection = source.getConnection();
+        try (Connection connection = baseCommonPool.getConnect();
              PreparedStatement prepare = connection.prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE login=? AND password=?")) {
             prepare.setString(1, requestLogin);
             prepare.setString(2, requestPassword);
@@ -127,7 +119,7 @@ public class DbUserStore implements Validate {
     @Override
     public User findByLoginAndPassword(String requestLogin, String requestPassword) {
         User foundUser = null;
-        try (Connection connection = source.getConnection();
+        try (Connection connection = baseCommonPool.getConnect();
              PreparedStatement prepare = connection.prepareStatement("SELECT u.user_id, u.name, u.login, u.email,"
                      + " u.image, u.password, u.role_id, u.date, r.name"
                      + " FROM users AS u INNER JOIN role AS r ON u.role_id = r.role_id WHERE login=? AND password=?")) {
