@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class SingInController extends HttpServlet {
-    private final Validate logic = ValidateUserService.getInstance();
+    private static final Validate LOGIC = ValidateUserService.getInstance();
     private static final String PATH_TO_SING_IN_JSP = "WEB-INF/views/singin/sing_in.jsp";
     private static final String LOGIN_PARAMETER = "login";
     private static final String PASSWORD_PARAMETER = "password";
@@ -28,8 +28,8 @@ public class SingInController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter(LOGIN_PARAMETER);
         String password = req.getParameter(PASSWORD_PARAMETER);
-        if (logic.isUserExist(login, password)) {
-            User checkedUser = logic.findByLoginAndPassword(login, password);
+        if (LOGIC.isUserExist(login, password)) {
+            User checkedUser = LOGIC.findByLoginAndPassword(login, password);
             HttpSession session = req.getSession();
             session.setAttribute("user", checkedUser);
             if (checkedUser.getRoleName().equals("admin")) {

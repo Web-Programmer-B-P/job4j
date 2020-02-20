@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({UserMainController.class})
 public class UserMainControllerTest {
-    private static final String FIELD_NAME = "logic";
+    private static final String FIELD_NAME = "LOGIC";
     private Validate validate;
     private HttpServletRequest req;
     private HttpServletResponse resp;

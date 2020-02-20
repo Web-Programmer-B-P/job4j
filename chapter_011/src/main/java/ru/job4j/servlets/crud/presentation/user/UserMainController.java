@@ -15,11 +15,11 @@ public class UserMainController extends HttpServlet {
     private static final String LIST_URI = "/list";
     private static final String PATH_TO_LIST_JSP = "WEB-INF/views/user/list.jsp";
     private static final String ID_PARAMETER = "id";
-    private static final Validate logic = ValidateUserService.getInstance();
+    private static final Validate LOGIC = ValidateUserService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        List<User> list = logic.findAll();
+        List<User> list = LOGIC.findAll();
         req.setAttribute("userList", list);
         req.getRequestDispatcher(String.format("%s%s", req.getContextPath(), PATH_TO_LIST_JSP)).forward(req, resp);
 
@@ -32,15 +32,15 @@ public class UserMainController extends HttpServlet {
         int id = 0;
         if (action.equals("add")) {
             User user = new User();
-            logic.add(fill(user, req));
+            LOGIC.add(fill(user, req));
             resp.sendRedirect(String.format("%s%s", req.getContextPath(), LIST_URI));
         }
 
         if (action.equals("update")) {
             if (idParam != null) {
                 id = Integer.parseInt(req.getParameter(ID_PARAMETER));
-                User userUpdate = logic.findById(id);
-                logic.update(fill(userUpdate, req));
+                User userUpdate = LOGIC.findById(id);
+                LOGIC.update(fill(userUpdate, req));
                 resp.sendRedirect(String.format("%s%s", req.getContextPath(), LIST_URI));
             }
         }
@@ -49,7 +49,7 @@ public class UserMainController extends HttpServlet {
             deleteImageBeforeDeleteUser(req);
             if (idParam != null) {
                 id = Integer.parseInt(req.getParameter(ID_PARAMETER));
-                logic.delete(id);
+                LOGIC.delete(id);
                 resp.sendRedirect(String.format("%s%s", req.getContextPath(), LIST_URI));
             }
         }
