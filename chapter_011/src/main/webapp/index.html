@@ -28,10 +28,10 @@
             <textarea type="text" class="form-control" rows="5" name="comment" id="comment" placeholder="Введите описание"></textarea>
         </div>
         <label class="radio-inline">
-            <input type="radio" value="man" name="radio" checked>Мужчина
+            <input type="radio" value="man" id="man" name="radio" checked>Мужчина
         </label>
         <label class="radio-inline">
-            <input type="radio" value="woman" name="radio">Женщина
+            <input type="radio" value="woman" id="woman" name="radio">Женщина
         </label>
         </br></br>
         <button type="submit" class="btn btn-success btn-block">Отправить</button>
@@ -48,21 +48,11 @@
             <th>Описание:</th>
         </tr>
         </thead>
-        <tbody>
-        <tr>
-            <td>John</td>
-            <td>Doe</td>
-            <td>Мужчина</td>
-            <td>Описание текст описания</td>
-        </tr>
-        <tr>
-            <td>John</td>
-            <td>Doe</td>
-            <td>Мужчина</td>
-            <td>Описание текст описания</td>
-        </tr>
-        </tbody>
+        <tbody id="table_row"><tr hidden><td></td><td></td><td></td><td></td></tr></tbody>
     </table>
+</div>
+<div class="container" style="width: 30%">
+    <button type="submit" class="btn btn-success btn-block" onclick="addRow()">Записать в таблицу</button>
 </div>
 </body>
 </html>

@@ -1,11 +1,11 @@
 $(document).ready(function () {
-    var validName = false;
-    var validSurname = false;
+    let validName = false;
+    let validSurname = false;
 
     $('form').submit(function (event) {
         event.preventDefault();
-        var name = $('#name').val();
-        var surname = $('#surname').val();
+        let name = $('#name').val();
+        let surname = $('#surname').val();
         if (name !== '') {
             validName = true;
             console.log(validName);
@@ -31,9 +31,27 @@ $(document).ready(function () {
                 .append("<span class='glyphicon glyphicon-remove form-control-feedback' aria-hidden='true'></span>");
             $('.parentSurname .glyphicon-ok').remove();
         }
-
         if (validName === true && validSurname === true) {
             $('form').unbind('submit').submit();
         }
-    })
+    });
 });
+
+function addRow() {
+    let sex = $('input[name="radio"]:checked').val();
+    if (sex === 'man') {
+        sex = 'Мужской';
+    } else {
+        sex = 'Женский';
+    }
+    let name = $('#name').val();
+    let surname = $('#surname').val();
+    let comment = $('#comment').val();
+    $('#table_row tr:last').after(
+        '<tr>'
+        + '<td>' + name + '</td>'
+        + '<td>' + surname + '</td>'
+        + '<td>' + comment + '</td>'
+        + '<td>' + sex + '</td>'
+        + '</tr>');
+}
