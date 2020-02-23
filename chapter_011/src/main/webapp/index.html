@@ -7,28 +7,31 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="index_form_validation.js"></script>
 </head>
 <body>
 <div class="container" style="width: 30%">
     <h1>Форма отправки данных</h1>
-    <form action="/action_page.php">
-        <div class="form-group">
+    <form action="">
+        <div class="form-group has-feedback parentName">
             <label for="name">Имя:</label>
-            <input type="text" class="form-control" id="name" placeholder="Введите имя" name="name">
+            <input type="text" class="form-control" placeholder="Введите имя"
+                   name="name" id="name">
         </div>
-        <div class="form-group">
+        <div class="form-group has-feedback parentSurname">
             <label for="surname">Фамилия:</label>
-            <input type="text" class="form-control" id="surname" placeholder="Введите фамилию" name="surname">
+            <input type="text" class="form-control" id="surname"
+                   placeholder="Введите фамилию" name="surname">
         </div>
         <div class="form-group">
             <label for="comment">Описание:</label>
-            <textarea class="form-control" rows="5" id="comment" placeholder="Введите описание"></textarea>
+            <textarea type="text" class="form-control" rows="5" name="comment" id="comment" placeholder="Введите описание"></textarea>
         </div>
         <label class="radio-inline">
-            <input type="radio" name="optradio" checked>Мужчина
+            <input type="radio" value="man" name="radio" checked>Мужчина
         </label>
         <label class="radio-inline">
-            <input type="radio" name="optradio">Женщина
+            <input type="radio" value="woman" name="radio">Женщина
         </label>
         </br></br>
         <button type="submit" class="btn btn-success btn-block">Отправить</button>
