@@ -136,4 +136,12 @@
         <servlet-name>SingleUserUpdateFileController</servlet-name>
         <url-pattern>/update_file_user</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>GreetingServlet</servlet-name>
+        <servlet-class>ru.job4j.servlets.crud.presentation.GreetingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GreetingServlet</servlet-name>
+        <url-pattern>/greet</url-pattern>
+    </servlet-mapping>
 </web-app>
