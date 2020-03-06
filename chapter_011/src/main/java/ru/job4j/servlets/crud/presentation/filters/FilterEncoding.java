@@ -1,8 +1,10 @@
 package ru.job4j.servlets.crud.presentation.filters;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
+@WebFilter("*")
 public class FilterEncoding implements Filter {
     private static final String CHARACTER_ENCODING = "UTF-8";
 

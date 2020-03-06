@@ -27,7 +27,7 @@ public class DbUserStore implements Validate {
     public void add(User user) {
         try (Connection connection = baseCommonPool.getConnect();
              PreparedStatement preparedStatement =
-                     connection.prepareStatement("INSERT INTO " + TABLE_NAME + " (name, login, email, image, password, role_id, date) values (?, ?, ?, ?, ?, ?, ?)")) {
+                     connection.prepareStatement("INSERT INTO " + TABLE_NAME + " (name, login, email, image, password, role_id, date, country, city) values (?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
             setCommonStatement(user, preparedStatement);
             preparedStatement.executeUpdate();
         } catch (Exception e) {
@@ -39,10 +39,10 @@ public class DbUserStore implements Validate {
     public void update(User user) {
         try (Connection connection = baseCommonPool.getConnect();
              PreparedStatement preparedStatement =
-                     connection.prepareStatement("UPDATE " + TABLE_NAME + " SET name=?, login=?, email=?, image=?, password=?, role_id=?, date=? WHERE "
+                     connection.prepareStatement("UPDATE " + TABLE_NAME + " SET name=?, login=?, email=?, image=?, password=?, role_id=?, date=?, country=?, city=? WHERE "
                              + PARAMETRIZED_QUERY_WITH_PRIMARY_KEY)) {
             setCommonStatement(user, preparedStatement);
-            preparedStatement.setInt(8, user.getId());
+            preparedStatement.setInt(10, user.getId());
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             LOG.error("Ошибка в методе обновления пользователя " + user, e);
@@ -68,7 +68,7 @@ public class DbUserStore implements Validate {
         try (Connection connection = baseCommonPool.getConnect();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT u.user_id, u.name, u.login, u.email, "
-                     + "u.image, u.password, u.role_id, u.date, r.name FROM users AS u INNER JOIN role AS r ON u.role_id = r.role_id")) {
+                     + "u.image, u.password, u.role_id, u.date, r.name, u.country, u.city FROM users AS u INNER JOIN role AS r ON u.role_id = r.role_id")) {
             while (resultSet.next()) {
                 listOfFoundUsers.add(fillFoundUser(resultSet));
             }
@@ -83,7 +83,7 @@ public class DbUserStore implements Validate {
         User foundUser = null;
         try (Connection connection = baseCommonPool.getConnect();
              PreparedStatement prepare = connection.prepareStatement("SELECT u.user_id, u.name, u.login, u.email, "
-                     + " u.image, u.password, u.role_id, u.date, r.name"
+                     + " u.image, u.password, u.role_id, u.date, r.name, u.country, u.city"
                      + " FROM users AS u INNER JOIN role AS r ON u.role_id = r.role_id WHERE "
                      + PARAMETRIZED_QUERY_WITH_PRIMARY_KEY)) {
             prepare.setInt(1, id);
@@ -121,7 +121,7 @@ public class DbUserStore implements Validate {
         User foundUser = null;
         try (Connection connection = baseCommonPool.getConnect();
              PreparedStatement prepare = connection.prepareStatement("SELECT u.user_id, u.name, u.login, u.email,"
-                     + " u.image, u.password, u.role_id, u.date, r.name"
+                     + " u.image, u.password, u.role_id, u.date, r.name, u.country, u.city"
                      + " FROM users AS u INNER JOIN role AS r ON u.role_id = r.role_id WHERE login=? AND password=?")) {
             prepare.setString(1, requestLogin);
             prepare.setString(2, requestPassword);
@@ -145,7 +145,9 @@ public class DbUserStore implements Validate {
         int roleId = resultSet.getInt(7);
         long date = resultSet.getDate(8).getTime();
         String roleName = resultSet.getString(9);
-        return new User(userId, name, login, email, image, date, password, roleId, roleName);
+        String country = resultSet.getString(10);
+        String city = resultSet.getString(11);
+        return new User(userId, name, login, email, image, date, password, roleId, roleName, country, city);
     }
 
     private void setCommonStatement(User user, PreparedStatement preparedStatement) throws SQLException {
@@ -156,5 +158,7 @@ public class DbUserStore implements Validate {
         preparedStatement.setString(5, user.getPassword());
         preparedStatement.setInt(6, user.getRoleId());
         preparedStatement.setDate(7, new Date(user.getCreateDate()));
+        preparedStatement.setString(8, user.getCountry());
+        preparedStatement.setString(9, user.getCity());
     }
 }

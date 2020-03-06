@@ -19,19 +19,19 @@ import static org.mockito.Mockito.when;
 
 @PowerMockIgnore({"com.sun.org.apache.xerces.*", "javax.xml.*", "org.xml.*", "org.w3c.dom.*", "javax.management.*"})
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({UserMainController.class})
-public class UserMainControllerTest {
+@PrepareForTest({MainActionController.class})
+public class MainActionControllerTest {
     private static final String FIELD_NAME = "LOGIC";
     private Validate validate;
     private HttpServletRequest req;
     private HttpServletResponse resp;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         req = mock(HttpServletRequest.class);
         resp = mock(HttpServletResponse.class);
         validate = new ValidateStub();
-        Whitebox.setInternalState(UserMainController.class, FIELD_NAME, validate);
+        Whitebox.setInternalState(MainActionController.class, FIELD_NAME, validate);
     }
 
     @Test
@@ -77,6 +77,6 @@ public class UserMainControllerTest {
         when(req.getParameter("id")).thenReturn(id);
         when(req.getParameter("name")).thenReturn(name);
         when(req.getParameter("login")).thenReturn(login);
-        new UserMainController().doPost(req, resp);
+        new MainActionController().doPost(req, resp);
     }
 }

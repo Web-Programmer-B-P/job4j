@@ -1,38 +1,27 @@
 package ru.job4j.servlets.crud.presentation.role;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.job4j.servlets.crud.logic.role.ValidateRole;
 import ru.job4j.servlets.crud.model.Role;
-import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
+@WebServlet("/role")
 public class RoleMainController extends HttpServlet {
-    private static final String LIST_ROLE_JSP = "WEB-INF/views/role/list_roles.jsp";
-    private static final String WARNING_MESSAGE = "Операция не удалась";
     private final ValidateRole logic = ValidateRole.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         List<Role> list = logic.findAllRoles();
-        req.setAttribute("roles", list);
-        req.getRequestDispatcher(String.format("%s%s", req.getContextPath(), LIST_ROLE_JSP)).forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
-        String idRole = req.getParameter("id");
-        String roleName = req.getParameter("name");
-        if (action.equals("update") && !idRole.isEmpty() && !roleName.isEmpty()) {
-            logic.updateRole(new Role(Integer.parseInt(idRole), roleName));
-        } else if (action.equals("create") && !roleName.isEmpty()) {
-            logic.addRole(new Role(roleName));
-        } else {
-            req.setAttribute("warning", WARNING_MESSAGE);
-        }
-        doGet(req, resp);
+        String responseObject = new ObjectMapper().writeValueAsString(list);
+        PrintWriter out = resp.getWriter();
+        resp.setContentType("text/html");
+        out.write(responseObject);
+        out.flush();
     }
 }
