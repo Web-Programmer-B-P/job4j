@@ -22,7 +22,7 @@ import java.util.UUID;
 public class UploadFileController extends HttpServlet {
     private static final Logger LOG = LogManager.getLogger(DbUserStore.class.getName());
     private static final int INDEX_OF_FIRST_ELEMENT_FROM_REQUEST = 0;
-    protected static final String PATH_TO_SAVE_IMAGES = "/home/proger/bin/images/";
+    protected static final String PATH_TO_SAVE_IMAGES = "images/";
     private static final String MESSAGE_LOG = "Смотри в метод загрузки файла";
     private static final String CONTENT_TYPE = "text/html";
     private String nameImage;

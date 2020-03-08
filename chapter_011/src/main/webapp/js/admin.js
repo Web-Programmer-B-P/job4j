@@ -36,7 +36,7 @@ function initAdminPage() {
                 + "<td>" + user.country + "</td>"
                 + "<td>" + user.city + "</td>"
                 + "<td>" + formatDate(new Date(user.createDate)) + "</td>"
-                + "<td><img src='/download?name=" + user.photoId + "' class='img-rounded' alt='Cinque Terre' width='150px' height='100px'/></td>"
+                + "<td><img src='/download?name=" + user.photoId + "' class='img-rounded real' alt='Cinque Terre' width='150px' height='100px'/></td>"
                 + "<td>"
                 + "<form action='/download' method='get'>"
                 + "<input type='hidden' name='name' value='" + user.photoId + "'>"
@@ -47,14 +47,18 @@ function initAdminPage() {
                 + "<button type='button' class='btn btn-info' data-toggle='modal' data-target='#adminModal'>Обновить</button>"
                 + "</td>"
                 + "<td>"
-                + "<input type='button' value='Удалить пользователя' class='btn btn-danger delete-user'>"
+                + "<input type='button' id='delete-disable' value='Удалить пользователя' class='btn btn-danger delete-user'>"
                 + "<input type='hidden' id='image' value='" + user.photoId + "'>"
                 + "</td></tr>")
                 .on('click', '.delete-user', function (event) {
-                    let currentImage = $(this).parent().find('#image').val();
-                    let currentId = $(this).parent().parent()[0].cells[0].innerText;
-                    let reference = $(this).parent().parent();
-                    deleteUser(currentId, currentImage, reference);
+                    if ($(this).parent().parent()[0].cells[5].innerText !== "admin") {
+                        let currentImage = $(this).parent().find('#image').val();
+                        let currentId = $(this).parent().parent()[0].cells[0].innerText;
+                        let reference = $(this).parent().parent();
+                        deleteUser(currentId, currentImage, reference);
+                    } else {
+                        alert("Сначала поменяйте роль на user, при условии что вы залогинены не под этим пользователем!")
+                    }
                     event.stopImmediatePropagation();
                     return false;
                 }).on('click', '.update', function (event) {
@@ -62,10 +66,7 @@ function initAdminPage() {
                 userUpdate(this);
                 event.stopImmediatePropagation();
                 return false;
-            })
-            if (user.roleName === 'admin') {
-                $('.delete-user').prop("disabled", true);
-            }
+            });
         });
     }).fail(function (err) {
         console.log(err);
