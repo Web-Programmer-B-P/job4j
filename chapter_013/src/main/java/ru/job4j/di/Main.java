@@ -1,12 +1,15 @@
 package ru.job4j.di;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 public class Main {
     public static void main(String[] args) {
-        Context context = new Context();
-        context.registered(Store.class);
-        context.registered(ConsoleInput.class);
-        context.registered(StartUi.class);
-        StartUi startUi = context.get(StartUi.class);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.register(Store.class);
+        context.register(ConsoleInput.class);
+        context.register(StartUi.class);
+        context.refresh();
+        StartUi startUi = context.getBean(StartUi.class);
         startUi.writeString();
         startUi.add("Sidorov");
         startUi.writeString();
