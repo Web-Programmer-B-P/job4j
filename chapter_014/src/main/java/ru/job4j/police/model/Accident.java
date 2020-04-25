@@ -1,9 +1,14 @@
 package ru.job4j.police.model;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+@Entity
+@Table(name = "accident")
 public class Accident {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String description;
